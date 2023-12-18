@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import AgeInputForm from "../components/forms/AgeInputForm";
 import { useUserContext } from "../context/userContext";
 import CarousalHome from "../components/carousal";
-import HomeFilters from "../components/buttons/homeFilters";
-import HomeSort from "../components/buttons/homeSort";
+import HomeFiltersButton from "../components/buttons/homeFilters";
+import HomeSortButton from "../components/buttons/homeSort";
+import NewsLetter from "../components/forms/newsLetter";
 import { FaNewspaper } from "react-icons/fa";
 import { FaTools } from "react-icons/fa";
 
@@ -69,8 +70,8 @@ const Home = () => {
             </div>
           </div>
           <div className="flex justify-between items-center w-5/6">
-            <HomeFilters/>
-            <HomeSort/>
+            <HomeFiltersButton/>
+            <HomeSortButton/>
           </div>
           <div className="flex justify-center items-center w-5/6">
            <a href="/discover">
@@ -78,6 +79,7 @@ const Home = () => {
            </a>
           </div>
         </div>
+        <NewsLetter/>
         {/* <CarousalHome /> */}
         {/* <ProductCard /> */}
       </div>

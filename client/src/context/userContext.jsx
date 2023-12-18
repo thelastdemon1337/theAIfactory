@@ -68,10 +68,11 @@ export function UserContextProvider({ children }) {
         params: {
           email: email,
         },
-        // headers:{
-        //   "auth-token": accessToken
-        // }
-      }, config );
+        headers:{
+          "auth-token": accessToken,
+          "ngrok-skip-browser-warning": true
+        }
+      } );
       const userData = response.data[0];
       console.log(userData)
       updateUser(userData);

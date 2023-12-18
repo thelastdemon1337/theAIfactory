@@ -1,13 +1,17 @@
 import { toast } from "react-toastify";
 
 // export const apiGateway = "http://localhost:3500"
-export const apiGateway = "https://855e-49-249-163-201.ngrok-free.app"
+export const apiGateway = "https://855e-49-249-163-201.ngrok-free.app";
+export const config = {
+  headers: {
+    "ngrok-skip-browser-warning": true,
+  },
+};
+export const PROJECT_ID = "321dm2om";
+export const DATASET = "production";
 
-export const PROJECT_ID = '321dm2om';
-export const DATASET = 'production';
-
-
-export const notifySuccess = (message) => toast.success(message, {
+export const notifySuccess = (message) =>
+  toast.success(message, {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
@@ -16,9 +20,10 @@ export const notifySuccess = (message) => toast.success(message, {
     draggable: true,
     progress: undefined,
     theme: "dark",
-});
+  });
 
-export const notifyInfo = (message) => toast.info(message, {
+export const notifyInfo = (message) =>
+  toast.info(message, {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
@@ -27,9 +32,10 @@ export const notifyInfo = (message) => toast.info(message, {
     draggable: true,
     progress: undefined,
     theme: "dark",
-});
+  });
 
-export const notifyError = (message) => toast.error(message, {
+export const notifyError = (message) =>
+  toast.error(message, {
     position: "top-center",
     autoClose: 4000,
     hideProgressBar: false,
@@ -38,4 +44,4 @@ export const notifyError = (message) => toast.error(message, {
     draggable: true,
     progress: undefined,
     theme: "dark",
-});
+  });

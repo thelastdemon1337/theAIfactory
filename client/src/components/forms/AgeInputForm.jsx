@@ -11,24 +11,22 @@ const AgeInputForm = () => {
   const naviage = useNavigate();
   const [openModal, setOpenModal] = useState(true);
   const [email, setEmail] = useState("");
-
-  function onCloseModal() {
-    setOpenModal(false);
-    setEmail("");
-  }
-
-
   const [user, setUser] = useState({
     email: currentUser?.email,
     fullname: currentUser?.fullname,
     age: currentUser?.age,
   });
 
+  function onCloseModal() {
+    setOpenModal(false);
+    setEmail("");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.removeItem('googleLoggedIn');
+    localStorage.removeItem("googleLoggedIn");
 
-    if (user.age && !isNaN(user.age) && user.age>13) {
+    if (user.age && !isNaN(user.age) && user.age > 13) {
       updateUser(user);
       try {
         const response = await axios.post(Constants.apiGateway + "/users", {
@@ -39,7 +37,7 @@ const AgeInputForm = () => {
         });
         const accessToken = response.data.accessToken;
 
-        await getUserDetails(user.email,accessToken)
+        await getUserDetails(user.email, accessToken);
         // updateUser(user);
         console.log(currentUser);
         console.log("Response:", response.data);
@@ -47,10 +45,10 @@ const AgeInputForm = () => {
       } catch (error) {
         if (error.message === "Request failed with status code 409") {
           Constants.notifyError("User alredy exists");
-          naviage('/login')
+          naviage("/login");
         } else {
           Constants.notifyError("Error");
-          naviage('/login')
+          naviage("/login");
           console.error(error);
         }
       }
@@ -58,8 +56,7 @@ const AgeInputForm = () => {
       setOpenModal(false);
     } else {
       // alert("Please enter a valid age.");
-      Constants.notifyError("Please enter a valid data.")
-
+      Constants.notifyError("Please enter a valid data.");
     }
   };
 
@@ -113,9 +110,9 @@ const AgeInputForm = () => {
                 <Label htmlFor="text" value="Age" />
                 <i className="text-sm p-2">*min age required 13</i>
               </div>
-              
+
               <TextInput
-                className={parseInt(user.age, 10) < 13 ? 'text-red-500' : ''}
+                className={parseInt(user.age, 10) < 13 ? "text-red-500" : ""}
                 id="age"
                 name="age"
                 placeholder="Age"
