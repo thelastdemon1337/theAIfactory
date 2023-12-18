@@ -103,7 +103,7 @@ const Signup = () => {
             >
               <div className="md:block hidden w-1/2">
                 <h2 className="font-bold text-start mb-8 text-2xl text-white">
-                  Metamist
+                TheAIFactory
                 </h2>
 
                 <img
@@ -114,7 +114,7 @@ const Signup = () => {
               </div>
               <div className="md:w-1/2 px-8 md:px-16 text-start">
                 <h2 className="font-bold  text-2xl text-white">SignUp</h2>
-                <p className="text-xs mt-4 text-white">Welcome to Metamist</p>
+                <p className="text-xs mt-4 text-white">Welcome to TheAIFactory</p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <input
@@ -217,7 +217,7 @@ const Signup = () => {
                     style={{ backgroundColor: "red" }}
                     className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
                   >
-                    Lgoin
+                    Login
                   </button>
                 </div>
               </div>

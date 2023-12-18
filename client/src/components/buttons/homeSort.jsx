@@ -13,10 +13,10 @@ const Dropdown = () => {
   };
 
   const options = [
-    { label: "Dashboard", value: "dashboard" },
-    { label: "Settings", value: "settings" },
-    { label: "Earnings", value: "earnings" },
-    { label: "Sign out", value: "signout" },
+    { label: "Categoy", value: "dashboard" },
+    { label: "Reviews", value: "settings" },
+    { label: "Favourites", value: "earnings" },
+    { label: "Release Date", value: "signout" },
   ];
 
   return (

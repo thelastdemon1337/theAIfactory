@@ -19,7 +19,7 @@ const Home = () => {
     <>
       <div>
         <div className=" mx-64 mt-32 text-white flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-bold mb-4">MetaMist</h1>
+          <h1 className="text-4xl font-bold mb-4">TheAIFactory</h1>
           <p className="text-lg mb-8">
             THE LARGEST AI TOOLS DIRECTORY, UPDATED DAILY
           </p>

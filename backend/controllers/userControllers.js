@@ -63,7 +63,7 @@ const otpValidate = async (req, res) => {
       otpMap.delete(user._id.toString());
     }, 600000);
 
-    const subject = "Welcome to metamist";
+    const subject = "Welcome to TheAIFactory";
     const text = "Get awesome deals on AI";
 
     sendEmail(email, subject, text);

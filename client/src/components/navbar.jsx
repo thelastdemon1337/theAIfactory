@@ -52,7 +52,7 @@ const Navbar = () => {
                   <div className="relative  md:block">
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3">
                       <h1 className="text-bold text-3xl font-bold text-white">
-                        <a href="/">MetaMist</a>
+                        <a href="/">TheAIFactory</a>
                       </h1>
                     </div>
                   </div>
