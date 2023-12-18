@@ -7,6 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { signInWithGooglePopup } from "../firebase/firebase";
 import { useUserContext } from "../context/userContext";
 
+const config = {
+  headers: {
+    "ngrok-skip-browser-warning": true
+  }
+}
+
 const Login = () => {
   const { logIn, currentUse, getUserDetails } = useUserContext();
   const naviage = useNavigate();
@@ -50,7 +56,7 @@ const Login = () => {
       const response = await axios.post(Constants.apiGateway + "/auth", {
         email: user.email,
         password: user.password,
-      });
+      }, config);
       console.log("Response:", response.data);
       const accessToken = response.data.accessToken;
       getUserDetails(user.email, accessToken);

@@ -6,6 +6,12 @@ import { useUserContext } from "../context/userContext";
 import { signInWithGooglePopup } from "../firebase/firebase";
 import OTPValidation from "../components/forms/otpValidation";
 
+const config = {
+  headers: {
+    "ngrok-skip-browser-warning": true
+  }
+}
+
 const Signup = () => {
   const { updateUser, currentUser } = useUserContext();
   const naviage = useNavigate();
@@ -56,7 +62,7 @@ const Signup = () => {
           password: user.password,
           fullname: user.fullname,
           age: user.age,
-        });
+        }, config);
         updateUser(user);
         console.log(currentUser);
         console.log("Response:", response.data);

@@ -9,6 +9,12 @@ import { auth } from "../firebase/firebase";
 import axios from "axios";
 import * as Constants from "../utils/constants";
 
+const config = {
+  headers: {
+    "ngrok-skip-browser-warning": true
+  }
+}
+
 export const userContext = createContext({
   currentUser: null,
   logIn: () => {},
@@ -65,7 +71,7 @@ export function UserContextProvider({ children }) {
         // headers:{
         //   "auth-token": accessToken
         // }
-      });
+      }, config );
       const userData = response.data[0];
       console.log(userData)
       updateUser(userData);

@@ -3,6 +3,12 @@ import * as Constants from "../../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const config = {
+  headers: {
+    "ngrok-skip-browser-warning": true
+  }
+}
+
 const OTPValidation = ({ details }) => {
   const [otp, setOTP] = useState("");
   const naviage = useNavigate();
@@ -13,7 +19,7 @@ const OTPValidation = ({ details }) => {
       const response = await axios.post(Constants.apiGateway + "/users/otp/validate", {
         email: details.email,
         otp: otp
-      });
+      }, config);
       if(response.status === 200){
         const { userId } = response.data;
         naviage("/");
