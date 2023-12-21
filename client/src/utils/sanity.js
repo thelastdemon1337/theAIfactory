@@ -25,6 +25,25 @@ export async function getAitools() {
   return posts;
 }
 
+export async function subscribeToNewsletter(email) {
+  try {
+    const result = await client.create(
+      {
+        _type: "newsletter",
+        title: email,
+        email: email,
+      },
+      {
+        token:
+          "skEbE0jXigz3JDhuyfLzZorUHF0jccOVESCbsuZoJS5Dz7mZKA0wNptyo7glKj6ISy9dVc2f7ekuAV3RdS6oRLm9N91ZnSI46prrkEPsRhexjAjcX3G8wpd9tneoXceObvQGypWwwhbxQPL1TUXbko7EyZNqVk7hjm5efXa889SRhHwVaTYx",
+      }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
 // uses GROQ to query content: https://www.sanity.io/docs/groq
 // export async function getPosts() {
 //   const posts = await client.fetch('*[_type == "post"]')

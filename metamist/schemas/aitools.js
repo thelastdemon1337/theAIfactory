@@ -1,4 +1,4 @@
-// schemas/product.js
+// schemas/aitools.js
 
 export default {
   name: 'aitools',
