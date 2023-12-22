@@ -14,7 +14,7 @@ const config = {
 }
 
 const Login = () => {
-  const { logIn, currentUse, getUserDetails } = useUserContext();
+  const { getUserDetails } = useUserContext();
   const naviage = useNavigate();
   const [user, setUser] = useState({
     email: "",

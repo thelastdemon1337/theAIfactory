@@ -4,6 +4,8 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ResetPassword from "./components/forms/resetPassword";
 
+import NewsLetter from "./components/forms/newsLetter";
+
 import Home from "./pages/home";
 import Discover from "./pages/discover";
 import Login from "./pages/login";
@@ -47,6 +49,7 @@ const App = () => {
         {/* <Route path="*" element={<NoPage />} /> */}
       </Routes>
       {/* <Footer/> */}
+      <NewsLetter/>
     </div>
   );
 };
