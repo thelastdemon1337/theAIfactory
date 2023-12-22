@@ -17,5 +17,7 @@ app.use(express.json())
 
 app.use('/users', require('./routes/userRoutes'))
 app.use('/auth', require('./routes/authRoutes'))
+app.use('/newsletter', require('./routes/newsletterRoute'))
+
 
 app.listen(PORT, () => console.log("Server is live on " + PORT));

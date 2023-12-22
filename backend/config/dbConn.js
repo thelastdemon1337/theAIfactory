@@ -5,7 +5,7 @@ const connectDB = async () => {
     await 
     mongoose.connect(
     //   process.env.DATABASE_URI,
-    "mongodb://localhost/Metamist-DB",
+    "mongodb://localhost/TheAIFactory-DB",
       console.log("DB connected"),
       {
         useUnifiedTopology: true,

@@ -11,10 +11,23 @@ export default {
       type: 'string',
     },
     {
-      name: 'email',
-      title: 'Email',
-      type: 'email',
+      name: 'subject',
+      title: 'Subject',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
     },
+    {
+      name: 'body',
+      title: 'Body',
+      type: 'text',
+      validation: (Rule) => Rule.required(),
+    },
+    // {
+    //   name: 'released',
+    //   title: 'Released',
+    //   type: 'boolean',
+    //   default: false,
+    // },
   ],
   preview: {
     select: {

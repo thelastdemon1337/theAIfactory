@@ -1,24 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  UserCredential,
-  signInWithPhoneNumber,
-  PhoneAuthProvider, signInWithCredential, ApplicationVerifier,
-  RecaptchaVerifier
 } from "firebase/auth";
 import {
   getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  collection, query, where, getDocs, setDoc
 } from "firebase/firestore";
-import * as Constants from "../utils/constants";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAXNonVHm8sFc7Tp5EQjY2X9IjHYOSZjhw",
