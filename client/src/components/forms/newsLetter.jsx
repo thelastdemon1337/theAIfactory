@@ -10,17 +10,54 @@ const NewsLetter = () => {
   const { currentUser } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
+  const [emailExists, setEmailExists] = useState(false);
 
   function onCloseModal() {
     setOpenModal(false);
     setEmail("");
   }
+  const checkEmailExists = async () => {
+    try {
+      const response = await axios.post(
+        `${Constants.apiGateway}/newsletter/check-email-exists`,
+        {
+          email: currentUser.email,
+        },
+        Constants.config
+      );
+
+      if (response.status === 200) {
+        setEmailExists(response.data.exists);
+      } else {
+        console.log(`Unexpected status code: ${response.status}`);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
-    setTimeout(() => {
+    const fetchData = async () => {
+      try {
+        await checkEmailExists();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+
+    const hasModalBeenShown = sessionStorage.getItem('modalShown');
+    const timeoutId = setTimeout(() => {
+     if (!hasModalBeenShown && !emailExists) {
+      sessionStorage.setItem('modalShown', 'true');
       setOpenModal(true);
+    }
     }, 6000);
-  }, []);
+
+    return () => clearTimeout(timeoutId);
+
+  }, [currentUser?.email, emailExists]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

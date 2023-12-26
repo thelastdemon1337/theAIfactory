@@ -8,8 +8,8 @@ const verifyJWT = require("../middleware/verifyJwtToken");
 router
   .route("/")
   .get(usersController.getAllUsers)
-  .post(usersController.createNewUser);
-// .patch(usersController.updateUser)
+  .post(usersController.createNewUser)
+  .patch(usersController.updateUser);
 // .delete(usersController.deleteUser)
 
 router.route("/user").get(usersController.getUserByEmail);
@@ -17,7 +17,5 @@ router.route("/user").get(usersController.getUserByEmail);
 router.route("/otp/validate").post(usersController.otpValidate);
 
 router.route("/reset-password").post(usersController.resetPassword);
-
-
 
 module.exports = router;

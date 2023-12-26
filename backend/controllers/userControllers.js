@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const sendEmail = require("../utils/nodemailer");
 const sendOTP = require("../utils/otpVerification.js");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const otpMap = new Map();
 
@@ -13,7 +13,7 @@ const getUserByEmail = async (req, res) => {
     return res.status(400).json({ message: "Invalid Data" });
   }
 
-  // Get all users from MongoDB
+  // Find users from MongoDB
   const user = await User.find({ email: email });
 
   // If no users
@@ -43,18 +43,18 @@ const otpValidate = async (req, res) => {
 
     const token = jwt.sign({ _id: user._id }, process.env.ACCESS_TOKEN_SECRET);
 
-    if(password){
+    if (password) {
       const hashedPwd = await bcrypt.hash(password, 10);
       user.password = hashedPwd;
       await user.save();
       return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      })
-      .status(200)
-      .send({ message: "Password reset successful", email: user.email });
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        })
+        .status(200)
+        .send({ message: "Password reset successful", email: user.email });
     }
     // Mark the user as verified (you can add a verified field to your User model)
     user.isVerified = true;
@@ -67,7 +67,6 @@ const otpValidate = async (req, res) => {
     const text = "Get awesome deals on AI";
 
     sendEmail(email, subject, text);
-
 
     return res
       .cookie("token", token, {
@@ -85,7 +84,7 @@ const otpValidate = async (req, res) => {
 const resetPassword = async (req, res) => {
   const { email } = req.body;
   try {
-    if (!email ) {
+    if (!email) {
       return res.status(400).json({ message: "All fields are required" });
     }
     // Check if the user with the provided email exists
@@ -93,7 +92,7 @@ const resetPassword = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
     if (user) {
       const otp = await sendOTP(
         email,
@@ -103,12 +102,10 @@ const resetPassword = async (req, res) => {
       otpMap.set(user._id.toString(), otp);
       console.log(otpMap);
       console.log(otp);
-  
-      res
-        .status(200)
-        .json({
-          message: `Email sent to ${email}, Please check your email`,
-        });
+
+      res.status(200).json({
+        message: `Email sent to ${email}, Please check your email`,
+      });
     } else {
       res.status(400).json({ message: "Invalid user data received" });
     }
@@ -174,11 +171,9 @@ const createNewUser = async (req, res) => {
     console.log(otpMap);
     console.log(otp);
 
-    res
-      .status(201)
-      .json({
-        message: `New user ${fullname} created, Please veify your email`,
-      });
+    res.status(201).json({
+      message: `New user ${fullname} created, Please veify your email`,
+    });
   } else {
     res.status(400).json({ message: "Invalid user data received" });
   }
@@ -188,16 +183,10 @@ const createNewUser = async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = async (req, res) => {
-  const { id, username, password } = req.body;
-
+  const { id, fullname, email, favouriteTools, age, password } = req.body;
+  console.log(req.body)
   // Confirm data
-  if (
-    !id ||
-    !username ||
-    !Array.isArray(roles) ||
-    !roles.length ||
-    typeof active !== "boolean"
-  ) {
+  if (!id || !fullname || !email || !favouriteTools || !age) {
     return res
       .status(400)
       .json({ message: "All fields except password are required" });
@@ -205,25 +194,14 @@ const updateUser = async (req, res) => {
 
   // Does the user exist to update?
   const user = await User.findById(id).exec();
-
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
 
-  // Check for duplicate
-  const duplicate = await User.findOne({ username })
-    .collation({ locale: "en", strength: 2 })
-    .lean()
-    .exec();
-
-  // Allow updates to the original user
-  if (duplicate && duplicate?._id.toString() !== id) {
-    return res.status(409).json({ message: "Duplicate username" });
-  }
-
-  user.username = username;
-  user.roles = roles;
-  user.active = active;
+  user.fullname = fullname;
+  user.email = email;
+  user.favouriteTools = favouriteTools;
+  user.age = age;
 
   if (password) {
     // Hash password
@@ -232,7 +210,7 @@ const updateUser = async (req, res) => {
 
   const updatedUser = await user.save();
 
-  res.json({ message: `${updatedUser.username} updated` });
+  res.json(updatedUser);
 };
 
 // @desc Delete a user
@@ -263,9 +241,10 @@ const updateUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   createNewUser,
+  updateUser,
   getUserByEmail,
   otpValidate,
-  resetPassword
+  resetPassword,
   // updateUser,
   // deleteUser
 };

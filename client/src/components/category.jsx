@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -14,39 +14,9 @@ import {
   PhoneIcon,
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
+import { useUserContext } from "../context/userContext";
+import * as Constants from "../utils/constants";
 
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
   { name: "Contact sales", href: "#", icon: PhoneIcon },
@@ -56,8 +26,76 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Category = () => {
+const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter }) => {
+  const { currentUser, updateUser } = useUserContext();
+  const [productData, setProductData] = useState(data);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedNavOption, setSelectedNavOption] = useState(null);
+  const [categories, setCategories] = useState([]);
+
+  const handleNavOptionClick = (option) => {
+    setSelectedNavOption(option);
+  };
+
+  const handleFavouriteClick = () => {
+    if (currentUser) {
+      setSelectedCategory(null);
+      const favoriteTools = data.filter((tool) =>
+        currentUser?.favouriteTools.includes(tool._id)
+      );
+      handleProductsData(favoriteTools);
+    }
+    console.log(currentUser?.favouriteTools.length);
+  };
+
+  const handleNewsletterClick = () => {
+    handleShowNesletter(!showNesletter)
+  };
+
+
+  const filterByCategory = (data, category) => {
+    if (!category) {
+      return data;
+    }
+    const filteredData = productData.filter(
+      (item) => item.category === category
+    );
+    return filteredData;
+  };
+
+  const handleCategoryClick = (category) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      return;
+    }
+    setSelectedCategory(category);
+    const filteredData = filterByCategory(data, category);
+    console.log(filteredData.length);
+    handleProductsData(filteredData);
+  };
+
+  useEffect(() => {
+    const fetchUniqueCategories = async () => {
+      try {
+        const uniqueCategories = Array.from(
+          new Set(
+            productData
+              .map((product) => product.category)
+              .filter((category) => category !== undefined && category !== null)
+          )
+        );
+
+        console.log(uniqueCategories);
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUniqueCategories();
+  }, []);
 
   return (
     <header className="bg-black">
@@ -90,9 +128,37 @@ const Category = () => {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
+          <button
+            onClick={() => {
+              handleNavOptionClick("Tools");
+              setShowCategories(false);
+            }}
+            className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
+              selectedNavOption === "Tools"
+                ? "text-gray-700 bg-gray-200"
+                : " text-white  bg-red-700"
+            } hover:bg-gray-700 hover:text-white`}
+          >
+            Tools
+          </button>
+          <button
+            onClick={() => {
+              setShowCategories(!showCategories);
+              handleNavOptionClick("Categories");
+              handleCategoryClick([]);
+            }}
+            className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
+              selectedNavOption === "Categories"
+                ? "text-gray-700 bg-gray-200"
+                : " text-white  bg-red-700"
+            } hover:bg-gray-700 hover:text-white`}
+          >
+            Categories
+          </button>
+          {/* <Popover className="relative rounded-md px-3 py-2 text-sm font-medium leading-6 text-white hover:bg-red-700 hover:text-white r">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-white">
-              News
+            Categories
+
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
                 aria-hidden="true"
@@ -136,17 +202,36 @@ const Category = () => {
                 </div>
               </Popover.Panel>
             </Transition>
-          </Popover>
+          </Popover> */}
 
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
-            Tools
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
-            Categories
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
-            Reviews
-          </a>
+          <button
+            onClick={() => {
+              handleNavOptionClick("Favourite");
+              setShowCategories(false);
+              handleFavouriteClick();
+            }}
+            className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
+              selectedNavOption === "Favourite"
+                ? "text-gray-700 bg-gray-200"
+                : " text-white  bg-red-700"
+            } hover:bg-gray-700 hover:text-white`}
+          >
+            Favourite
+          </button>
+          <button
+            onClick={() => {
+              handleNavOptionClick("Newsletter");
+              setShowCategories(false);
+              handleNewsletterClick()
+            }}
+            className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
+              selectedNavOption === "Newsletter"
+                ? "text-gray-700 bg-gray-200"
+                : " text-white  bg-red-700"
+            } hover:bg-gray-700 hover:text-white`}
+          >
+            Newsletter
+          </button>
         </Popover.Group>
       </nav>
       <Dialog
@@ -184,7 +269,7 @@ const Category = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
+                {/* <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-white hover:bg-red-700">
@@ -211,30 +296,56 @@ const Category = () => {
                       </Disclosure.Panel>
                     </>
                   )}
-                </Disclosure>
+                </Disclosure> */}
                 <a
-                  href="#"
+                  href="/discover"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
                 >
                   Tools
                 </a>
                 <a
-                  href="#"
+                  href="/discover"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
                 >
                   Categories
                 </a>
                 <a
-                  href="#"
+                  href="/discover"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
                 >
-                  Reviews
+                  Favourite
+                </a>
+                <a
+                  href="/discover"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                >
+                  Newsletter
                 </a>
               </div>
             </div>
           </div>
         </Dialog.Panel>
       </Dialog>
+      {showCategories && (
+        <nav
+          className="mx-auto flex max-w-7xl items-start justify-start lg:px-8 "
+          aria-label="Global"
+        >
+          {categories.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => handleCategoryClick(item)}
+              className={`rounded-md px-3 py-2 m-3 text-sm font-medium ${
+                selectedCategory === item
+                  ? "text-white bg-red-700"
+                  : "text-gray-700 bg-gray-200"
+              } hover:bg-gray-700 hover:text-white`}
+            >
+              {item}
+            </button>
+          ))}
+        </nav>
+      )}
     </header>
   );
 };

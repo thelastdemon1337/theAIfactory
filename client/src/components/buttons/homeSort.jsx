@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = () => {
+const HomeSort = ({handleSort}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -8,15 +8,17 @@ const Dropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
   const handleOptionClick = (value) => {
-    setSelectedValue(value.value);
+    setSelectedValue(value);
     setIsDropdownOpen(false);
+    handleSort(value)
+    console.log(value)
   };
 
   const options = [
-    { label: "Categoy", value: "dashboard" },
-    { label: "Reviews", value: "settings" },
-    { label: "Favourites", value: "earnings" },
-    { label: "Release Date", value: "signout" },
+    { label: "Categories", value: "categories" },
+    { label: "Reviews", value: "reviews" },
+    { label: "Favourites", value: "favourites" },
+    { label: "By all", value: "all" },
   ];
 
   return (
@@ -56,15 +58,15 @@ const Dropdown = () => {
           >
             {options.map((option) => (
               <li key={option.value}>
-                <a
+                <span
                   //   href="/"
                   className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${
                     selectedValue === option.value ? "font-bold" : ""
                   }`}
-                  onClick={() => handleOptionClick(option)}
+                  onClick={() => handleOptionClick(option.value)}
                 >
                   {option.label}
-                </a>
+                </span>
               </li>
             ))}
           </ul>
@@ -74,4 +76,4 @@ const Dropdown = () => {
   );
 };
 
-export default Dropdown;
+export default HomeSort;

@@ -25,6 +25,11 @@ export async function getAitools() {
   return posts;
 }
 
+export async function getNewsletter() {
+  const newsletter = await client.fetch('*[_type == "newsletter"]');
+  return newsletter;
+}
+
 export async function subscribeToNewsletter(email) {
   try {
     const result = await client.create(

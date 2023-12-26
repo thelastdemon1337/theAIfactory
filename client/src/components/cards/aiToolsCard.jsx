@@ -1,71 +1,72 @@
 import React, { useState, useEffect } from "react";
-import SigninPopup from "./popups/signinPopup";
+import { useLocation } from "react-router-dom";
 
-import { getAitools, builder } from "../utils/sanity";
-import { useUserContext } from "../context/userContext";
+import SigninPopup from "../popups/signinPopup";
 
-const ProductCard = () => {
-  const { currentUser } = useUserContext();
-  const [productData, setProductData] = useState([]);
+import { getAitools, builder } from "../../utils/sanity";
+import { useUserContext } from "../../context/userContext";
+
+const AIToolsCard = ({ data, query }) => {
+  console.log(data.map((d) => d._id));
+  const { currentUser, updateUser } = useUserContext();
+  console.log(currentUser.favouriteTools);
+  const [productData, setProductData] = useState();
+  const [isLikedByCurrentUser, setIsLikedByCurrentUser] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [showSignup, setShowSignup] = useState(false);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const dateQuery = searchParams.get("date");
 
   function urlFor(source) {
     return builder.image(source);
   }
 
+  const handleProducts = (value) => {
+    console.log(value.length);
+    setProductData(value);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAitools();
-
-        if (response.length > 0) {
-          setProductData(response);
-          console.log(response);
+    try {
+      if (query && data.length > 0) {
+        const filteredPosts = data.filter((post) =>
+          post.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setProductData(filteredPosts);
+        console.log(filteredPosts);
+      } else if (dateQuery === "today" && data.length > 0) {
+        if (dateQuery === "today") {
+          const currentDate = new Date().toISOString().split("T")[0];
+          const filteredData = data.filter((post) => {
+            return post.publicationDate.split("T")[0] === currentDate;
+          });
+          setProductData(filteredData);
+          setLoading(false);
         }
-
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+      } else {
+        setProductData(data);
       }
-    };
-
-    fetchData();
-  }, []);
-
-  const products = [
-    {
-      _id: 1,
-      name: "Apple Watch",
-      description: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: 599,
-      imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-      likes: "4",
-    },
-    {
-      id: 2,
-      name: "Apple TV",
-      description: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: 299,
-      imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-      likes: "34",
-    },
-    {
-      id: 33,
-      name: "Apple Iphone",
-      description: "Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport",
-      price: 799,
-      imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-      likes: "17",
-    },
-  ];
+      const commonElements = data.filter((obj2) =>
+        currentUser.favouriteTools.includes(obj2._id)
+      );
+      const ids = commonElements.map((obj) => obj._id);
+      setIsLikedByCurrentUser(ids);
+      console.log(ids);
+      console.log(isLikedByCurrentUser);
+      console.log(commonElements);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }, [data, query, dateQuery]);
 
   const handleSignUpModal = (value) => {
     console.log(value);
     setShowSignup(value);
   };
+
   const handleAccessNowButton = () => {
     console.log(currentUser.age);
     if (currentUser.age === "") {
@@ -73,23 +74,48 @@ const ProductCard = () => {
     }
   };
 
-  const handlefavouriteButton = () => {
-    console.log(currentUser.age);
-    if (currentUser.age === "") {
+  // const handlefavouriteButton = (id) => {
+  //   console.log(id);
+  //   updateUser({
+  //     favouriteTools: [...currentUser.favouriteTools, id],
+  //   });
+  //   console.log(currentUser)
+  // };
+
+  const handlefavouriteButton = (id) => {
+    if (currentUser?.email === "") {
       handleSignUpModal(true);
+      return;
     }
+    const isAlreadyLiked = currentUser.favouriteTools.includes(id);
+  
+    if (isAlreadyLiked) {
+      setIsLikedByCurrentUser((prev) => prev.filter((toolId) => toolId !== id));
+    } else {
+      setIsLikedByCurrentUser((prev) => [...prev, id]);
+    }
+  
+    const updatedFavouriteTools = isAlreadyLiked
+      ? currentUser.favouriteTools.filter((toolId) => toolId !== id)
+      : [...currentUser.favouriteTools, id];
+  
+    updateUser({
+      favouriteTools: updatedFavouriteTools,
+    });
   };
+  
+  
 
   return (
     <>
       {showSignup && <SigninPopup setShowModal={handleSignUpModal} />}
 
       <div className="flex flex-wrap justify-center">
-        {productData.map((product) => (
+        {productData?.map((product) => (
           <div
             key={product._id}
-            style={{ backgroundColor: "red" }}
-            className="transition-transform transform hover:scale-105 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-sm mx-4 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            style={{ backgroundColor: "red", width: "22rem", height: "30rem" }}
+            className="transition-transform transform hover:scale-105 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-sm mx-2 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           >
             <a href="/">
               <img
@@ -156,8 +182,8 @@ const ProductCard = () => {
                     5.0
                   </span>
                 </div>
-                <p className="text-md font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2">
-                  {product.description}
+                <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
+                  {product.description?.slice(0, 60)}
                 </p>
               </a>
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
@@ -185,7 +211,7 @@ const ProductCard = () => {
                 </button>
 
                 <button
-                  onClick={handlefavouriteButton}
+                  onClick={() => handlefavouriteButton(product._id)}
                   className="flex items-end justify-center rounded-xl px-4"
                   style={{
                     backgroundColor: "#FF9900",
@@ -193,11 +219,15 @@ const ProductCard = () => {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
+                    fill={
+                      isLikedByCurrentUser.includes(product._id)
+                        ? "red"
+                        : "#FF9900"
+                    }
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6  my-auto"
+                    className="w-6 h-6 my-auto"
                   >
                     <path
                       strokeLinecap="round"
@@ -218,4 +248,4 @@ const ProductCard = () => {
   );
 };
 
-export default ProductCard;
+export default AIToolsCard;
