@@ -25,9 +25,10 @@ const NewsLetter = () => {
         },
         Constants.config
       );
-
+      console.log(response)
       if (response.status === 200) {
         setEmailExists(response.data.exists);
+        return response.data
       } else {
         console.log(`Unexpected status code: ${response.status}`);
       }
@@ -39,7 +40,9 @@ const NewsLetter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await checkEmailExists();
+        const res = await checkEmailExists();
+        console.log(res.data)
+        console.log("Check Email Exists crossed!")
       } catch (error) {
         console.error(error);
       }

@@ -4,8 +4,8 @@ const connectDB = async () => {
   try {
     await 
     mongoose.connect(
-    //   process.env.DATABASE_URI,
-    "mongodb://localhost/TheAIFactory-DB",
+      process.env.DATABASE_URI,
+    // "mongodb://localhost/TheAIFactory-DB",
       console.log("DB connected"),
       {
         useUnifiedTopology: true,
