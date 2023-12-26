@@ -9,7 +9,7 @@ router
   .post(newsletterController.storeNewEmail)
   .get(newsletterController.getNewsletter);
 
-//   .get(usersController.getAllUsers)
+router.route("/check-email-exists").post(newsletterController.checkIfEmailExits);
 
 router.route("/send-newsletter").post(newsletterController.sendNewsletter);
 

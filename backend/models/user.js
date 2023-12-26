@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  favouriteTools: [
+    {
+      type: String,
+      ref: "AITools",
+    },
+  ],
   registration_date: {
     type: Date,
     default: Date.now,

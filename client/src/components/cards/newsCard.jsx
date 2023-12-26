@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-import { getNews, builder } from "../utils/sanity";
+import { getNews, builder } from "../../utils/sanity";
 
-const NewsCard = () => {
+const NewsCard = ({query}) => {
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const dateQuery = searchParams.get("date");
 
   function urlFor(source) {
     return builder.image(source);
@@ -16,77 +19,27 @@ const NewsCard = () => {
       try {
         const response = await getNews();
 
-        if (response.length > 0) {
-          setNewsData(response);
-          console.log(response);
-        }
+        if (dateQuery === "today") {
+          const currentDate = new Date().toISOString().split("T")[0];
 
-        setLoading(false);
+          const filteredData = response.filter((post) => {
+            return post.publicationDate.split("T")[0] === currentDate;
+          });
+
+          setNewsData(filteredData);
+          setLoading(false);
+        }else if (!dateQuery && response.length > 0) {
+          setNewsData(response);
+        }
       } catch (error) {
-        setError(error);
+        console.log(error);
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [dateQuery]);
 
-  // const news = [
-  //   {
-  //     id: 4,
-  //     name: "New Technology Breakthrough",
-  //     content:
-  //       "Scientists make a groundbreaking discovery in the field of quantum computing.",
-  //     price: 0,
-  //     imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //     likes: "87",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Space Exploration Mission",
-  //     content:
-  //       "NASA announces plans for a new mission to explore distant planets in our solar system.",
-  //     price: 0,
-  //     imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //     likes: "53",
-  //   },
-  //   {
-  //       id: 4,
-  //       name: "New Technology Breakthrough",
-  //       content:
-  //         "Scientists make a groundbreaking discovery in the field of quantum computing.",
-  //       price: 0,
-  //       imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //       likes: "87",
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "Space Exploration Mission",
-  //       content:
-  //         "NASA announces plans for a new mission to explore distant planets in our solar system.",
-  //       price: 0,
-  //       imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //       likes: "53",
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "New Technology Breakthrough",
-  //       content:
-  //         "Scientists make a groundbreaking discovery in the field of quantum computing.",
-  //       price: 0,
-  //       imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //       likes: "87",
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "Space Exploration Mission",
-  //       content:
-  //         "NASA announces plans for a new mission to explore distant planets in our solar system.",
-  //       price: 0,
-  //       imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
-  //       likes: "53",
-  //     },
-  // ];
   return (
     <>
       <div className="flex flex-wrap justify-center">

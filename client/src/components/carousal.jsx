@@ -70,7 +70,9 @@ const CarousalHome = () => {
               <li
                 key={index}
                 className="item"
-                style={{ backgroundImage: `url(${item.imageUrl})` }}
+                style={{
+                  backgroundImage: `url(${item.imageUrl})`,
+                }}
               >
                 <div className="content">
                   <h2 className="title">{item.title}</h2>
@@ -81,53 +83,52 @@ const CarousalHome = () => {
             ))}
           </ul>
           <nav className="nav flex items-center w-full">
-          <button
-            type="button"
-            style={{ transform: "rotate(180deg)" }}
-            className="prev text-white ml-3 bg-red-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-black font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-black"
-          >
-            <svg
-              className="w-4 h-4"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
+            <button
+              type="button"
+              style={{ transform: "rotate(180deg)" }}
+              className="prev text-white ml-3 bg-red-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-black font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-black"
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-            <span className="sr-only"></span>
-          </button>
-          <div className="flex-grow"></div>
-          <button
-            type="button"
-            className="next text-white mr-3 bg-red-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-black font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-black"
-          >
-            <svg
-              className="w-4 h-4"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
+              <svg
+                className="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+              <span className="sr-only"></span>
+            </button>
+            <div className="flex-grow"></div>
+            <button
+              type="button"
+              className="next text-white mr-3 bg-red-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-black font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-black"
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-            <span className="sr-only"></span>
-          </button>
-        </nav>
+              <svg
+                className="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+              <span className="sr-only"></span>
+            </button>
+          </nav>
         </div>
-       
       </main>
     </>
   );

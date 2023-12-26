@@ -1,9 +1,40 @@
 import { Button, Modal, Select } from "flowbite-react";
 import { useState } from "react";
 import { BsFillBookmarkFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import * as Constants from "../../utils/constants"
+import { signInWithGooglePopup } from "../../firebase/firebase";
+import { useUserContext } from "../../context/userContext";
 
 const SigninPopup = ({setShowModal}) => {
+  const { updateUser } = useUserContext();
+  const naviage = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
   const [openModal, setOpenModal] = useState(true);
+  const signInWithGoogle = async () => {
+    try {
+      const verifiedUser = await signInWithGooglePopup();
+      console.log("SignUp complete");
+      console.log(verifiedUser.user);
+      const { email, displayName, accessToken } = verifiedUser.user;
+      console.log(email, displayName);
+      updateUser({ email: email, fullname: displayName });
+      // await getUserDetails(email, accessToken);
+      localStorage.setItem("googleLoggedIn", "true");
+      naviage("/");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        Constants.notifyError("Cannot create user, email already in use");
+      } else {
+        Constants.notifyError("user creation encountered an error");
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <>
@@ -37,7 +68,7 @@ const SigninPopup = ({setShowModal}) => {
           <div className="flex items-center justify-center">
             <button
               style={{ backgroundColor: "red" }}
-              //   onClick={signInWithGoogle}
+                onClick={signInWithGoogle}
               className="bg-white border py-2 w-64 rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-white"
             >
               <svg

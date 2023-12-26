@@ -16,6 +16,12 @@ export default {
       type: 'text',
     },
     {
+      name: 'publicationDate',
+      title: 'Publication Date',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'category',
       title: 'Category',
       type: 'string',

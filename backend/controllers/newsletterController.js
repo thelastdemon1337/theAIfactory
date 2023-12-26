@@ -1,4 +1,5 @@
 const Newsletter = require("../models/newsletter");
+const User = require("../models/user");
 const sendEmail = require("../utils/nodemailer");
 const { client } = require("../config/sanity");
 
@@ -80,8 +81,32 @@ const sendNewsletter = async (req, res) => {
   }
 };
 
+const checkIfEmailExits = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.json({
+        exists: true,
+        message: "Email already exists in the database.",
+      });
+    }
+
+    return res.json({
+      exists: false,
+      message: "Email does not exist in the database.",
+    });
+  } catch (error) {
+    console.error("Error sending emails:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 module.exports = {
   storeNewEmail,
   sendNewsletter,
   getNewsletter,
+  checkIfEmailExits,
 };
