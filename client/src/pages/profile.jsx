@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 import { useUserContext } from "../context/userContext";
 
 const Profile = () => {
-    const { currentUser } = useUserContext();
-console.log(currentUser)
+  const { currentUser } = useUserContext();
+  console.log(currentUser);
   return (
     <div style={{ backgroundColor: "white" }}>
       {currentUser.fullname}
@@ -12,7 +12,7 @@ console.log(currentUser)
       {currentUser.email}
       {currentUser._id}
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

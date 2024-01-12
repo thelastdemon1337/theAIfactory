@@ -15,7 +15,7 @@ const config = {
 
 const Login = () => {
   const { getUserDetails } = useUserContext();
-  const naviage = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -37,7 +37,7 @@ const Login = () => {
       const { email, displayName, accessToken } = verifiedUser.user;
       console.log(accessToken);
       await getUserDetails(email, accessToken);
-      naviage("/");
+      navigate("/");
       Constants.notifySuccess("Login Successfully");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
@@ -61,7 +61,7 @@ const Login = () => {
       const accessToken = response.data.accessToken;
       getUserDetails(user.email, accessToken);
       Constants.notifySuccess("Login Successfully");
-      naviage("/");
+      navigate("/");
     } catch (error) {
       // if (error.message === "Request failed with status code 401") {
       //   Constants.notifyError("Unauthorized User")
@@ -72,7 +72,7 @@ const Login = () => {
   };
 
   const handleNavigateToSignup = () => {
-    naviage("/signup");
+    navigate("/signup");
   };
 
   return (
@@ -160,7 +160,7 @@ const Login = () => {
             <div className="mt-5 text-xs border-b border-white py-4 text-white">
               <a
                 onClick={() => {
-                  naviage("/reset-password");
+                  navigate("/reset-password");
                 }}
               >
                 Forgot your password?

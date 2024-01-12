@@ -1,0 +1,59 @@
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import ShopAIPowered from "../components/banners/shopAIPowered";
+
+import AIToolsCard from "../components/cards/aiToolsCard";
+import { getAitools } from "../utils/sanity";
+import { useParams } from "react-router-dom";
+
+const AITools = () => {
+  const [productData, setProductData] = useState([]);
+  const [globalData, setGlobalData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const categoryQuery = searchParams.get("category");
+  const query = searchParams.get("query");
+
+  useEffect(() => {
+    const fetchTool = async () => {
+      try {
+        const response = await getAitools();
+        if (response.length > 0) {
+          setProductData(response);
+          setGlobalData(response);
+        }
+        setLoading(false);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+
+    fetchTool();
+  }, []);
+
+  return (
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <ShopAIPowered />
+          <AIToolsCard
+            data={productData}
+            query={query}
+            categoryQuery={categoryQuery}
+            showGlobalTools={true}
+            handleShowGlobalTools={null}
+            showAllCategories={null}
+            handleShowAllCategories={null}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AITools;

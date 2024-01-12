@@ -27,6 +27,7 @@ const USER = {
   age: "",
   fullname: "",
   role: "",
+  tokens: "",
   favouriteTools: [],
   registration_date: "",
   _id: "",
@@ -66,7 +67,7 @@ export function UserContextProvider({ children }) {
               fullname: currentUser.fullname,
               favouriteTools: currentUser.favouriteTools,
               age: currentUser.age,
-
+              tokens : currentUser.tokens 
           },
           {
             headers: {
@@ -133,6 +134,7 @@ export function UserContextProvider({ children }) {
         fullname: user.fullname,
         favouriteTools: user.favouriteTools,
         age: user.age,
+        token: user.tokens,
 
         headers: {
           // "auth-token": accessToken,

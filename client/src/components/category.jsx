@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import CategoryCard from "../components/cards/categoryCard";
 import {
   ChevronDownIcon,
   PhoneIcon,
@@ -16,6 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useUserContext } from "../context/userContext";
 import * as Constants from "../utils/constants";
+import ShopAIPowered from "../components/banners/shopAIPowered";
 
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
@@ -26,7 +20,16 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter }) => {
+const Category = ({
+  data,
+  handleProductsData,
+  handleShowNesletter,
+  showNesletter,
+  showGlobalTools,
+  handleShowGlobalTools,
+  showAllCategories,
+  handleShowAllCategories,
+}) => {
   const { currentUser, updateUser } = useUserContext();
   const [productData, setProductData] = useState(data);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,8 +37,25 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedNavOption, setSelectedNavOption] = useState(null);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   const handleNavOptionClick = (option) => {
+    // if (option !== "Newsletter") {
+    //   handleShowNesletter(false);
+    // }
+    if (selectedNavOption === option) {
+      handleShowAllCategories(false);
+      handleShowGlobalTools(false);
+      setSelectedNavOption(null);
+      return;
+    }
+    if (option === "Categories") {
+      console.log(showCategories);
+      handleShowAllCategories(!showAllCategories);
+      handleShowGlobalTools(false);
+      return;
+    }
+    handleShowGlobalTools(!showGlobalTools);
     setSelectedNavOption(option);
   };
 
@@ -47,23 +67,17 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
       );
       handleProductsData(favoriteTools);
     }
-    console.log(currentUser?.favouriteTools.length);
   };
 
   const handleNewsletterClick = () => {
-    handleShowNesletter(!showNesletter)
+    handleShowNesletter(!showNesletter);
   };
 
-
-  const filterByCategory = (data, category) => {
-    if (!category) {
-      return data;
-    }
-    const filteredData = productData.filter(
-      (item) => item.category === category
-    );
-    return filteredData;
+  const handleToolsClick = () => {
+    navigate("/ai-tools");
   };
+
+ 
 
   const handleCategoryClick = (category) => {
     if (selectedCategory === category) {
@@ -71,9 +85,9 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
       return;
     }
     setSelectedCategory(category);
-    const filteredData = filterByCategory(data, category);
-    console.log(filteredData.length);
-    handleProductsData(filteredData);
+    // const filteredData = filterByCategory(data, category);
+    // handleProductsData(filteredData);
+    navigate(`/ai-tools?category=${encodeURIComponent(category)}`);
   };
 
   useEffect(() => {
@@ -132,6 +146,7 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
             onClick={() => {
               handleNavOptionClick("Tools");
               setShowCategories(false);
+              handleToolsClick();
             }}
             className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
               selectedNavOption === "Tools"
@@ -145,7 +160,7 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
             onClick={() => {
               setShowCategories(!showCategories);
               handleNavOptionClick("Categories");
-              handleCategoryClick([]);
+              // handleCategoryClick([]);
             }}
             className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
               selectedNavOption === "Categories"
@@ -222,7 +237,7 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
             onClick={() => {
               handleNavOptionClick("Newsletter");
               setShowCategories(false);
-              handleNewsletterClick()
+              handleNewsletterClick();
             }}
             className={`rounded-md px-3 py-2 m-3 text-sm font-medium leading-6 ${
               selectedNavOption === "Newsletter"
@@ -326,25 +341,67 @@ const Category = ({ data, handleProductsData, handleShowNesletter, showNesletter
           </div>
         </Dialog.Panel>
       </Dialog>
-      {showCategories && (
-        <nav
-          className="mx-auto flex max-w-7xl items-start justify-start lg:px-8 "
-          aria-label="Global"
-        >
-          {categories.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => handleCategoryClick(item)}
-              className={`rounded-md px-3 py-2 m-3 text-sm font-medium ${
-                selectedCategory === item
-                  ? "text-white bg-red-700"
-                  : "text-gray-700 bg-gray-200"
-              } hover:bg-gray-700 hover:text-white`}
-            >
-              {item}
-            </button>
-          ))}
-        </nav>
+
+      <ShopAIPowered />
+      {!showNesletter && !showGlobalTools && !showAllCategories && (
+        <div>
+          <div className="mx-auto my-4 px-3 flex  items-start justify-start lg:px-8">
+            <h3 className="text-xl font-semibold text-white">
+              Trending Categories
+            </h3>
+          </div>
+          <div className="mx-auto flex flex-wrap items-start justify-start lg:px-8">
+            {categories.slice(0, 6).map((item, index) => (
+              <div
+                key={index}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2"
+              >
+                <div onClick={() => handleCategoryClick(item)}>
+                  <CategoryCard
+                    category={item}
+                    imageUrl={
+                      "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {showAllCategories && (
+        <div>
+          <div className="mx-auto my-4 flex px-3 items-start justify-start lg:px-8">
+            <h3 className="text-xl font-semibold text-white">All Categories</h3>
+          </div>
+          <div className="mx-auto flex flex-wrap items-start justify-start lg:px-8">
+            {categories.map((item, index) => (
+              <div
+                key={index}
+                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2"
+              >
+                {/* <button
+                onClick={() => handleCategoryClick(item)}
+                className={`rounded-md px-3 py-2 m-3 text-sm font-medium ${
+                  selectedCategory === item
+                    ? "text-white bg-red-700"
+                    : "text-gray-700 bg-gray-200"
+                } hover:bg-gray-700 hover:text-white`}
+              >
+                {item}
+              </button> */}
+                <div onClick={() => handleCategoryClick(item)}>
+                  <CategoryCard
+                    category={item}
+                    imageUrl={
+                      "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </header>
   );

@@ -21,11 +21,11 @@ const NewsLetter = () => {
       const response = await axios.post(
         `${Constants.apiGateway}/newsletter/check-email-exists`,
         {
-          email: currentUser.email,
+          email: currentUser?.email,
         },
         Constants.config
       );
-
+        console.log(response)
       if (response.status === 200) {
         setEmailExists(response.data.exists);
       } else {
@@ -39,7 +39,8 @@ const NewsLetter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await checkEmailExists();
+ await checkEmailExists();
+
       } catch (error) {
         console.error(error);
       }

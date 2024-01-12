@@ -12,9 +12,13 @@ import AIToolsCard from "./components/cards/aiToolsCard";
 
 import Home from "./pages/home";
 import Discover from "./pages/discover";
+import AITools from "./pages/aiTools";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Profile from "./pages/profile";
+import PaymentScreen from "./pages/payment";
+import CustomerSupport from "./pages/customerSupport";
+
 import ComingSoon from "./components/comingSoon";
 
 import { Routes, Route } from "react-router-dom";
@@ -60,14 +64,17 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/discover" element={<Discover />} />
+        <Route path="/customer-support" element={<CustomerSupport />} />
 
         <Route path="/discover/news" element={<NewsCard />} />
         <Route path="/discover/aitools" element={<AIToolsCard query={""} data={data} />} />
 
         <Route path="/profile" element={<Profile />} />
-        <Route path="/ai-tools" element={<ComingSoon />} />
+        <Route path="/ai-tools" element={<AITools />} />
+
         <Route path="/family" element={<ComingSoon />} />
         <Route path="/pricing" element={<ComingSoon />} />
+        <Route path="/payments" element={<PaymentScreen />} />
 
         <Route path="/reset-password" element={<ResetPassword />} />
 

@@ -183,8 +183,9 @@ const createNewUser = async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = async (req, res) => {
-  const { id, fullname, email, favouriteTools, age, password } = req.body;
-  console.log(req.body)
+  const { id, fullname, email, favouriteTools, age, password, tokens } =
+    req.body;
+  console.log(req.body);
   // Confirm data
   if (!id || !fullname || !email || !favouriteTools || !age) {
     return res
@@ -202,6 +203,7 @@ const updateUser = async (req, res) => {
   user.email = email;
   user.favouriteTools = favouriteTools;
   user.age = age;
+  user.tokens = tokens;
 
   if (password) {
     // Hash password
