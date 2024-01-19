@@ -145,7 +145,7 @@ const createNewUser = async (req, res) => {
     .exec();
 
   if (duplicate) {
-    return res.status(409).json({ message: "Duplicate username" });
+    return res.status(409).json({ message: "Duplicate email" });
   }
 
   // Hash password
@@ -185,12 +185,21 @@ const createNewUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { id, fullname, email, favouriteTools, age, password, tokens } =
     req.body;
-  console.log(req.body);
   // Confirm data
   if (!id || !fullname || !email || !favouriteTools || !age) {
     return res
       .status(400)
       .json({ message: "All fields except password are required" });
+  }
+
+   // Check for duplicate username
+  const duplicate = await User.findOne({ email })
+    .collation({ locale: "en", strength: 2 })
+    .lean()
+    .exec();
+
+  if (duplicate) {
+    return res.status(409).json({ message: "Duplicate email" });
   }
 
   // Does the user exist to update?
@@ -203,7 +212,10 @@ const updateUser = async (req, res) => {
   user.email = email;
   user.favouriteTools = favouriteTools;
   user.age = age;
-  user.tokens = tokens;
+  
+  if(tokens){
+    user.tokens = tokens;
+  }
 
   if (password) {
     // Hash password

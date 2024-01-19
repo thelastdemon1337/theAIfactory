@@ -60,6 +60,11 @@ const Category = ({
   };
 
   const handleFavouriteClick = () => {
+    if (selectedNavOption === "Favourite") {
+      handleProductsData(productData)
+      console.log("Favourite")
+      return;
+    }
     if (currentUser) {
       setSelectedCategory(null);
       const favoriteTools = data.filter((tool) =>
@@ -76,8 +81,6 @@ const Category = ({
   const handleToolsClick = () => {
     navigate("/ai-tools");
   };
-
- 
 
   const handleCategoryClick = (category) => {
     if (selectedCategory === category) {
@@ -100,7 +103,6 @@ const Category = ({
               .filter((category) => category !== undefined && category !== null)
           )
         );
-
         console.log(uniqueCategories);
         setCategories(uniqueCategories);
       } catch (error) {
@@ -312,30 +314,56 @@ const Category = ({
                     </>
                   )}
                 </Disclosure> */}
-                <a
-                  href="/discover"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                <span
+                  onClick={() => {
+                    handleNavOptionClick("Tools");
+                    setShowCategories(false);
+                    handleToolsClick();
+                  }}
                 >
-                  Tools
-                </a>
-                <a
-                  href="/discover"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                  <span className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700">
+                    Tools
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    setShowCategories(!showCategories);
+                    handleNavOptionClick("Categories");
+                    // handleCategoryClick([]);
+                  }}
                 >
-                  Categories
-                </a>
-                <a
-                  href="/discover"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                  <span
+                    href="/discover"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                  >
+                    Categories
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    handleNavOptionClick("Favourite");
+                    setShowCategories(false);
+                    handleFavouriteClick();
+                  }}
                 >
-                  Favourite
-                </a>
-                <a
-                  href="/discover"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                  <span
+                    href="/discover"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700"
+                  >
+                    Favourite
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    handleNavOptionClick("Newsletter");
+                    setShowCategories(false);
+                    handleNewsletterClick();
+                  }}
                 >
-                  Newsletter
-                </a>
+                  <span className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-red-700">
+                    Newsletter
+                  </span>
+                </span>
               </div>
             </div>
           </div>
@@ -351,7 +379,7 @@ const Category = ({
             </h3>
           </div>
           <div className="mx-auto flex flex-wrap items-start justify-start lg:px-8">
-            {categories.slice(0, 6).map((item, index) => (
+            {categories?.slice(0, 6).map((item, index) => (
               <div
                 key={index}
                 className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2"
@@ -375,7 +403,7 @@ const Category = ({
             <h3 className="text-xl font-semibold text-white">All Categories</h3>
           </div>
           <div className="mx-auto flex flex-wrap items-start justify-start lg:px-8">
-            {categories.map((item, index) => (
+            {categories?.map((item, index) => (
               <div
                 key={index}
                 className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2"

@@ -25,7 +25,7 @@ const NewsLetter = () => {
         },
         Constants.config
       );
-        console.log(response)
+      console.log(response);
       if (response.status === 200) {
         setEmailExists(response.data.exists);
       } else {
@@ -39,8 +39,7 @@ const NewsLetter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
- await checkEmailExists();
-
+        await checkEmailExists();
       } catch (error) {
         console.error(error);
       }
@@ -48,16 +47,15 @@ const NewsLetter = () => {
 
     fetchData();
 
-    const hasModalBeenShown = sessionStorage.getItem('modalShown');
+    const hasModalBeenShown = sessionStorage.getItem("modalShown");
     const timeoutId = setTimeout(() => {
-     if (!hasModalBeenShown && !emailExists) {
-      sessionStorage.setItem('modalShown', 'true');
-      setOpenModal(true);
-    }
+      if (!hasModalBeenShown && !emailExists) {
+        sessionStorage.setItem("modalShown", "true");
+        setOpenModal(true);
+      }
     }, 6000);
 
     return () => clearTimeout(timeoutId);
-
   }, [currentUser?.email, emailExists]);
 
   const handleSubmit = async (e) => {

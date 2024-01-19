@@ -9,8 +9,9 @@ const SearchCategoryBar = ({ handleCategory }) => {
     "Design",
     "Coding",
     "Video",
-    "Research & Analysis",
-    "All Categories",
+    "tools",
+    "bard",
+    "claude",
   ];
 
   const handleCategoryClick = (category) => {
@@ -19,16 +20,16 @@ const SearchCategoryBar = ({ handleCategory }) => {
   };
   return (
     <>
-      <div className="flex space-x-2 bg-transparent rounded-md">
+      <div className="flex space-x-2 my-3 px-2 bg-transparent justify-evenly items-center rounded-md">
         {categories.map((category, index) => (
           <div
             key={index}
             onClick={() => handleCategoryClick(category)}
-            className={`px-4 my-3 ${
+            className={`px-5 p-3 ${
               selectedCategory === category
                 ? "bg-red-500 text-white"
                 : "bg-[#24292F] text-white"
-            } rounded-3xl cursor-pointer py-3`}
+            } rounded-3xl cursor-pointer `}
           >
             {category}
           </div>

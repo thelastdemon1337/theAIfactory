@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const HomeSearch = () => {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState("");
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
 
@@ -27,6 +27,7 @@ const HomeSearch = () => {
 
   const handleCategory = (value) => {
     console.log(value);
+    navigate(`/ai-tools/?query=${encodeURIComponent(value)}`);
     setCategory(value);
   };
 
@@ -47,9 +48,10 @@ const HomeSearch = () => {
       queryParams += `query=${encodeURIComponent(search)}`;
     }
 
-    if (filters.length > 0) {
-      const filtersParam = encodeURIComponent(filters.join(","));
-      queryParams += `${queryParams ? "&" : ""}filters=${filtersParam}`;
+    if (filters) {
+      queryParams += `${queryParams ? "&" : ""}filters=${encodeURIComponent(
+        filters
+      )}`;
     }
 
     if (sort) {
@@ -113,18 +115,19 @@ const HomeSearch = () => {
             </div>
           </div>
           <div className="w-full sm:w-5/6 lg:w-3/4 xl:w-2/3 mt-4">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-              <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+            <div className="flex flex-row sm:flex-row justify-between items-between mb-4">
+              <div className="flex items-center">
                 <HomeFiltersButton handleFilters={handleFilter} />
-                <div className="hidden md:flex">
-                  <SearchCategoryBar handleCategory={handleCategory} />
-                </div>
               </div>
-              <HomeSortButton handleSort={handleSort} />
+
+              <div className="hidden md:flex flex-grow justify-center space-x-4">
+                <SearchCategoryBar handleCategory={handleCategory} />
+              </div>
+
+              <div className="flex items-center">
+                <HomeSortButton handleSort={handleSort} />
+              </div>
             </div>
-            {/* <div className="flex justify-center items-center">
-    <a href="/discover">View More</a>
-  </div> */}
           </div>
         </div>
       </div>

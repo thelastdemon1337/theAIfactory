@@ -19,6 +19,7 @@ app.use('/users', require('./routes/userRoutes'))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/newsletter', require('./routes/newsletterRoutes'))
 app.use('/payments', require('./routes/paymentRoutes'))
+app.use('/chatGPT', require('./routes/chatgptRoutes'))
 
 
 app.listen(PORT, () => console.log("Server is live on " + PORT));

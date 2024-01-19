@@ -40,6 +40,7 @@ const Discover = () => {
     setShowAllCategories(value);
   };
 
+
   useEffect(() => {
     const fetchTool = async () => {
       try {

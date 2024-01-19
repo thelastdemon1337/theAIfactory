@@ -62,12 +62,12 @@ export function UserContextProvider({ children }) {
           Constants.apiGateway + "/users/",
           {
 
-              id: currentUser._id,
-              email: currentUser.email,
-              fullname: currentUser.fullname,
-              favouriteTools: currentUser.favouriteTools,
-              age: currentUser.age,
-              tokens : currentUser.tokens 
+              id: currentUser?._id,
+              email: currentUser?.email,
+              fullname: currentUser?.fullname,
+              favouriteTools: currentUser?.favouriteTools,
+              age: currentUser?.age,
+              tokens : currentUser?.tokens 
           },
           {
             headers: {
@@ -79,25 +79,17 @@ export function UserContextProvider({ children }) {
         const userData = response.data[0];
         console.log("User updated on both frontend and backend:", userData);
       } catch (error) {
-        console.log("Error updating user:", error);
-        // Handle the error, e.g., show a notification to the user
+        if(error.request.status === 409){
+          console.log("Email Already Exits: ", error);
+        }else{
+          console.log("Error updating user:", error);
+        }
       }
     },
     [currentUser]
   );
 
-  // const updateUser = useCallback(
-  //   (updatedUser) => {
-  //     setCurrentUser((prevUser) => ({ ...prevUser, ...updatedUser }));
-  //     localStorage.setItem(
-  //       "currentUser",
-  //       JSON.stringify({ ...currentUser, ...updatedUser })
-  //     );
-  //   },
-  //   [currentUser]
-  // );
-
-  const isAgeProvided = currentUser.age !== "";
+  const isAgeProvided = currentUser?.age !== "";
 
   const getUserDetails = async (email, accessToken) => {
     try {
@@ -115,9 +107,10 @@ export function UserContextProvider({ children }) {
       const userData = response.data[0];
       console.log(userData);
       updateUser(userData);
+      // setCurrentUser((prevUser) => (console.log(prevUser)));
+      // setCurrentUser((prevUser) => ({ ...prevUser, ...userData }));
       console.log(currentUser);
-      console.log();
-      return;
+      return response;
     } catch (error) {
       console.log(error);
       return error;
@@ -142,10 +135,7 @@ export function UserContextProvider({ children }) {
         },
       });
       const userData = response.data[0];
-      console.log(userData);
       updateUser(userData);
-      console.log(currentUser);
-      console.log();
       return;
     } catch (error) {
       console.log(error);

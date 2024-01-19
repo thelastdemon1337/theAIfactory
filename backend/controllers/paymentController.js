@@ -5,17 +5,21 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const createCheckoutSession = async (req, res) => {
   const { amount, userID } = req.body;
 
-  if (!amount || !userID) {
+  // if (!amount || !userID) {
+  //   return res.status(400).json({ message: "All fields are required" });
+  // }
+
+  if (!amount) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
-    const user = await User.findById(userID);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
+    // const user = await User.findById(userID);
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ success: false, message: "User not found" });
+    // }
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount * 100,
       currency: "inr",

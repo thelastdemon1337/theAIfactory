@@ -15,12 +15,26 @@ const AITools = () => {
   const categoryQuery = searchParams.get("category");
   const query = searchParams.get("query");
 
+  const filterByCategory = (data, category) => {
+    if (!category) {
+      return data;
+    }
+    const filteredData = data.filter((item) => item.category === category);
+    return filteredData;
+  };
+
   useEffect(() => {
     const fetchTool = async () => {
       try {
         const response = await getAitools();
         if (response.length > 0) {
-          setProductData(response);
+          if (!categoryQuery) {
+            const filteredData = filterByCategory(response, "aitools");
+            setProductData(filteredData);
+          } else {
+            setProductData(response);
+          }
+
           setGlobalData(response);
         }
         setLoading(false);

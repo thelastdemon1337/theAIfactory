@@ -101,14 +101,14 @@ const Navbar = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {currentUser._id && (
+                        {currentUser?._id && (
                           <Menu.Item>
                             <div className="divide-y divide-gray-100">
                               <Link
-                                to="/payments"
+                                to="/profile"
                                 className="block hover:bg-gray-100 px-4 py-4 text-sm text-gray-700"
                               >
-                                {currentUser.tokens} tokens
+                                {currentUser?.tokens} tokens
                               </Link>
                             </div>
                           </Menu.Item>
@@ -153,7 +153,7 @@ const Navbar = () => {
                             </Link>
                           )}
                         </Menu.Item>
-                        {currentUser.email ? (
+                        {currentUser?.email ? (
                           <Menu.Item>
                             {({ active }) => (
                               <Link

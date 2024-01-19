@@ -64,6 +64,17 @@ export default {
       of: [{type: 'string'}],
     },
     {
+      name: 'isChatBot',
+      title: 'isChatBot',
+      type: 'boolean',
+      default: false,
+    },
+    {
+      name: 'toolURL',
+      title: 'toolURL',
+      type: 'string',
+    },
+    {
       title: 'Image',
       name: 'image',
       type: 'image',
@@ -71,6 +82,13 @@ export default {
       options: {
         hotspot: true, // <-- Defaults to false
       },
+    //       {
+    //   name: 'released',
+    //   title: 'Released',
+    //   type: 'boolean',
+    //   default: false,
+    // },
+    
       fields: [
         {
           name: 'caption',

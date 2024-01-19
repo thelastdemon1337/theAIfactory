@@ -5,6 +5,7 @@ import SigninPopup from "../popups/signinPopup";
 import AvailabilityMessage from "../AvailibilityMessage";
 import { getAitools, builder } from "../../utils/sanity";
 import { useUserContext } from "../../context/userContext";
+import ProductModal from "../modals/productModal";
 
 const AIToolsCard = ({
   data,
@@ -24,7 +25,17 @@ const AIToolsCard = ({
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const dateQuery = searchParams.get("date");
-  console.log(dateQuery)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toolData, setToolData] = useState({});
+
+  const openProductModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setIsModalOpen(false);
+    setToolData({});
+  };
 
   function urlFor(source) {
     return builder.image(source);
@@ -35,13 +46,15 @@ const AIToolsCard = ({
     setProductData(value);
   };
 
+  const handleIsLikedByCurrentUser = (value) => {
+    setIsLikedByCurrentUser(value);
+  };
+
   const filterByCategory = (data, category) => {
     if (!category) {
       return data;
     }
-    const filteredData = data.filter(
-      (item) => item.category === category
-    );
+    const filteredData = data.filter((item) => item.category === category);
     return filteredData;
   };
 
@@ -57,28 +70,28 @@ const AIToolsCard = ({
         console.log(filteredPosts);
       } else if (dateQuery === "today" && data.length > 0) {
         if (dateQuery === "today") {
-          console.log(1)
+          console.log(1);
           const currentDate = new Date().toISOString().split("T")[0];
           const filteredData = data.filter((post) => {
             return post.publicationDate.split("T")[0] === currentDate;
           });
-          if(!filteredData.length && filteredData.length === 0){
-            setShowAvailibilityMessage(true)
+          if (!filteredData.length && filteredData.length === 0) {
+            setShowAvailibilityMessage(true);
             return;
           }
           setProductData(filteredData);
           setLoading(false);
         }
-      }else if (categoryQuery && data.length > 0) {
-        console.log(categoryQuery)
+      } else if (categoryQuery && data.length > 0) {
+        console.log(categoryQuery);
         const filteredData = filterByCategory(data, categoryQuery);
         setProductData(filteredData);
       } else {
         setProductData(data);
       }
-      
+
       const commonElements = data.filter((obj2) =>
-        currentUser.favouriteTools.includes(obj2._id)
+        currentUser?.favouriteTools.includes(obj2._id)
       );
       const ids = commonElements.map((obj) => obj._id);
       setIsLikedByCurrentUser(ids);
@@ -94,11 +107,13 @@ const AIToolsCard = ({
     setShowSignup(value);
   };
 
-  const handleAccessNowButton = () => {
-    console.log(currentUser.age);
-    if (currentUser.age === "") {
+  const handleAccessNowButton = (product) => {
+    console.log(currentUser?.age);
+    if (currentUser?.age === "") {
       handleSignUpModal(true);
     }
+    setToolData(product);
+    openProductModal();
   };
 
   const handlefavouriteButton = (id) => {
@@ -106,7 +121,7 @@ const AIToolsCard = ({
       handleSignUpModal(true);
       return;
     }
-    const isAlreadyLiked = currentUser.favouriteTools.includes(id);
+    const isAlreadyLiked = currentUser?.favouriteTools.includes(id);
 
     if (isAlreadyLiked) {
       setIsLikedByCurrentUser((prev) => prev.filter((toolId) => toolId !== id));
@@ -115,12 +130,27 @@ const AIToolsCard = ({
     }
 
     const updatedFavouriteTools = isAlreadyLiked
-      ? currentUser.favouriteTools.filter((toolId) => toolId !== id)
-      : [...currentUser.favouriteTools, id];
+      ? currentUser?.favouriteTools.filter((toolId) => toolId !== id)
+      : [...currentUser?.favouriteTools, id];
 
     updateUser({
       favouriteTools: updatedFavouriteTools,
     });
+  };
+
+  //dummy data
+  const modalData = {
+    videoUrl: "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1",
+    features: ["Feature 1", "Feature 2", "Feature 3"],
+    price: "$19.99",
+    name: "Product Name",
+    tags: ["Tag1", "Tag2", "Tag3"],
+    accessNow: "Access Now",
+    bookmark: "Bookmark",
+    "-id": "sf",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in justo eu odio auctor blandit.",
+    likes: "33",
   };
 
   return (
@@ -149,7 +179,7 @@ const AIToolsCard = ({
                       }}
                       className="transition-transform transform hover:scale-105 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-sm mx-2 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                     >
-                      <a href="/">
+                      <span onClick={() => handleAccessNowButton(product)}>
                         <img
                           className="rounded-t-lg"
                           style={{ objectFit: "contain" }}
@@ -159,9 +189,9 @@ const AIToolsCard = ({
                             .url()}`}
                           alt={product.name}
                         />
-                      </a>
+                      </span>
                       <div className="px-5 py-3">
-                        <a href="/">
+                        <span>
                           <h5 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             {product.name}
                           </h5>
@@ -220,7 +250,7 @@ const AIToolsCard = ({
                           <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
                             {product.description?.slice(0, 60)}
                           </p>
-                        </a>
+                        </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
                           {product.tags && product.tags.length > 0 && (
                             <div className="flex items-center space-x-1">
@@ -237,7 +267,7 @@ const AIToolsCard = ({
                         </div>
                         <div className="flex items-center justify-between mt-4">
                           <button
-                            onClick={handleAccessNowButton}
+                            onClick={() => handleAccessNowButton(product)}
                             className="hover:scale-105 bg-[#FF9900] rounded-lg px-4 py-2.5"
                           >
                             <span className="text-sm font-bold text-gray-900 dark:text-white">
@@ -284,7 +314,7 @@ const AIToolsCard = ({
             {showGlobalTools && (
               <>
                 <div className="mx-auto my-4 flex px-3 items-start justify-start lg:px-8">
-                  <h3 className="text-xl font-semibold text-white ">Tools</h3>
+                  <h3 className="text-3xl font-bold text-white  "> AI Tools</h3>
                 </div>
                 <div className="flex flex-wrap justify-center">
                   {productData?.map((product) => (
@@ -297,7 +327,7 @@ const AIToolsCard = ({
                       }}
                       className="transition-transform transform hover:scale-105 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-sm mx-2 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                     >
-                      <a href="/">
+                      <span onClick={() => handleAccessNowButton(product)}>
                         <img
                           className="rounded-t-lg"
                           style={{ objectFit: "contain" }}
@@ -307,9 +337,9 @@ const AIToolsCard = ({
                             .url()}`}
                           alt={product.name}
                         />
-                      </a>
+                      </span>
                       <div className="px-5 py-3">
-                        <a href="/">
+                        <span>
                           <h5 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             {product.name}
                           </h5>
@@ -368,7 +398,7 @@ const AIToolsCard = ({
                           <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
                             {product.description?.slice(0, 60)}
                           </p>
-                        </a>
+                        </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
                           {product.tags && product.tags.length > 0 && (
                             <div className="flex items-center space-x-1">
@@ -385,7 +415,7 @@ const AIToolsCard = ({
                         </div>
                         <div className="flex items-center justify-between mt-4">
                           <button
-                            onClick={handleAccessNowButton}
+                            onClick={() => handleAccessNowButton(product)}
                             className="hover:scale-105 bg-[#FF9900] rounded-lg px-4 py-2.5"
                           >
                             <span className="text-sm font-bold text-gray-900 dark:text-white">
@@ -431,6 +461,15 @@ const AIToolsCard = ({
             )}
           </div>
         )}
+        {!showSignup && currentUser?._id &&  <ProductModal
+          isOpen={isModalOpen}
+          closeModal={closeProductModal}
+          data={toolData}
+          isLikedByCurrentUser={isLikedByCurrentUser}
+          handleIsLikedByCurrentUser={handleIsLikedByCurrentUser}
+         />}
+
+       
       </div>
     </>
   );

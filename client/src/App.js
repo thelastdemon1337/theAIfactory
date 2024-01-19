@@ -9,6 +9,7 @@ import ResetPassword from "./components/forms/resetPassword";
 import NewsLetter from "./components/forms/newsLetter";
 import NewsCard from "./components/cards/newsCard";
 import AIToolsCard from "./components/cards/aiToolsCard";
+import Chat from "./components/chat/chat";
 
 import Home from "./pages/home";
 import Discover from "./pages/discover";
@@ -16,7 +17,7 @@ import AITools from "./pages/aiTools";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Profile from "./pages/profile";
-import PaymentScreen from "./pages/payment";
+// import PaymentScreen from "./pages/payment";
 import CustomerSupport from "./pages/customerSupport";
 
 import ComingSoon from "./components/comingSoon";
@@ -71,10 +72,11 @@ const App = () => {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/ai-tools" element={<AITools />} />
+        <Route path="/ai-tools/chatgpt" element={<Chat/>} />
 
         <Route path="/family" element={<ComingSoon />} />
         <Route path="/pricing" element={<ComingSoon />} />
-        <Route path="/payments" element={<PaymentScreen />} />
+        {/* <Route path="/payments" element={<PaymentScreen />} /> */}
 
         <Route path="/reset-password" element={<ResetPassword />} />
 
