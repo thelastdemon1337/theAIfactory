@@ -31,7 +31,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-gray-800 z-50">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -48,8 +48,8 @@ const Navbar = () => {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="relative  md:block">
+                <div className="hidden md:block flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="relative md:block text-center">
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3">
                       <h1 className="text-bold text-3xl font-bold text-white">
                         <a href="/">TheAIFactory</a>
@@ -101,6 +101,19 @@ const Navbar = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        {currentUser?._id && (
+                          <Menu.Item>
+                            <div className="divide-y divide-gray-100">
+                              <Link
+                                to="/profile"
+                                className="block hover:bg-gray-100 px-4 py-4 text-sm text-gray-700"
+                              >
+                                {currentUser?.tokens} tokens
+                              </Link>
+                            </div>
+                          </Menu.Item>
+                        )}
+
                         <Menu.Item>
                           {({ active }) => (
                             <Link
@@ -117,6 +130,19 @@ const Navbar = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
+                              to="/customer-support"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Customer Support
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
                               to="#"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -127,7 +153,7 @@ const Navbar = () => {
                             </Link>
                           )}
                         </Menu.Item>
-                        {currentUser.email ? (
+                        {currentUser?.email ? (
                           <Menu.Item>
                             {({ active }) => (
                               <Link

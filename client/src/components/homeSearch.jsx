@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const HomeSearch = () => {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState("");
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
 
@@ -27,6 +27,7 @@ const HomeSearch = () => {
 
   const handleCategory = (value) => {
     console.log(value);
+    navigate(`/ai-tools/?query=${encodeURIComponent(value)}`);
     setCategory(value);
   };
 
@@ -36,7 +37,7 @@ const HomeSearch = () => {
   };
 
   const handleToolsAddedToday = () => {
-    navigate(`/discover/aitools?date=${encodeURIComponent("today")}`);
+    navigate(`/tools?date=${encodeURIComponent("today")}`);
     console.log(search);
   };
 
@@ -47,9 +48,10 @@ const HomeSearch = () => {
       queryParams += `query=${encodeURIComponent(search)}`;
     }
 
-    if (filters.length > 0) {
-      const filtersParam = encodeURIComponent(filters.join(","));
-      queryParams += `${queryParams ? "&" : ""}filters=${filtersParam}`;
+    if (filters) {
+      queryParams += `${queryParams ? "&" : ""}filters=${encodeURIComponent(
+        filters
+      )}`;
     }
 
     if (sort) {
@@ -63,18 +65,20 @@ const HomeSearch = () => {
       )}`;
     }
 
-    navigate(`/discover/${queryParams ? `?${queryParams}` : ""}`);
+    navigate(`/tools/${queryParams ? `?${queryParams}` : ""}`);
   };
 
   return (
     <>
       <div>
-        <div className="mx-64 mt-32 text-white flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-bold mb-4">TheAIFactory</h1>
-          <p className="text-lg mb-8">
+        <div className="mx-4 mt-12 text-white text-center flex flex-col justify-center items-center sm:mx-8 lg:mx-16">
+          {/* <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+            TheAIFactory
+          </h1> */}
+          <p className="text-sm sm:text-base lg:text-lg mb-4">
             THE LARGEST AI TOOLS DIRECTORY, UPDATED DAILY
           </p>
-          <div className="flex space-x-4 mb-8">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mb-4 ">
             <button
               type="button"
               onClick={handleNewsAddedToday}
@@ -92,50 +96,39 @@ const HomeSearch = () => {
               Tools Added Today
             </button>
           </div>
-          <div className="flex flex-1 items-center w-5/6 justify-center sm:items-stretch sm:justify-start">
+          <div className="w-full sm:w-5/6 lg:w-3/4 xl:w-2/3">
             <div className="relative w-full flex flex-row">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-                <span className="sr-only">Search icon</span>
-              </div>
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"></div>
               <input
                 type="text"
                 id="search-navbar"
-                className="block w-5/6 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search..."
                 onChange={(e) => setSearch(e.target.value)}
               />
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded-md ml-2  w-1/6"
+                className="bg-red-500 text-white px-4 py-2 rounded-md ml-2 w-full sm:w-1/6 sm:mt-0"
                 onClick={() => handleSearch()} // Replace with your actual search function
               >
                 Search
               </button>
             </div>
           </div>
+          <div className="w-full sm:w-5/6 lg:w-3/4 xl:w-2/3 mt-4">
+            <div className="flex flex-row sm:flex-row justify-between items-between mb-4">
+              <div className="flex items-center">
+                <HomeFiltersButton handleFilters={handleFilter} />
+              </div>
 
-          <div className="flex justify-between items-center w-5/6">
-            <HomeFiltersButton handleFilters={handleFilter} />
-            <SearchCategoryBar handleCategory={handleCategory} />
-            <HomeSortButton handleSort={handleSort} />
+              <div className="hidden md:flex flex-grow justify-center space-x-4">
+                <SearchCategoryBar handleCategory={handleCategory} />
+              </div>
+
+              <div className="flex items-center">
+                <HomeSortButton handleSort={handleSort} />
+              </div>
+            </div>
           </div>
-          {/* <div className="flex justify-center items-center w-5/6">
-            <a href="/discover">View More</a>
-          </div> */}
         </div>
       </div>
     </>

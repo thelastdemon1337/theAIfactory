@@ -12,7 +12,6 @@ const Newsletter = ({ data }) => {
     const cleanedText = text.replace(/\s\s+/g, " ").replace(/\n/g, " ");
 
     const words = cleanedText.split(" ");
-    console.log(words);
 
     if (words.length > limit) {
       return words.slice(0, limit).join(" ") + "...";
@@ -23,16 +22,16 @@ const Newsletter = ({ data }) => {
 
   return (
     <>
-      <div className="mx-64 mt-8 justify-center">
+      <div className="mx-4 md:mx-64 mt-8 flex flex-col items-center justify-center">
         {newsletterData.map((post) => (
-          <p
+          <div
             key={post.title}
-            className="flex flex-col items-start w-full bg-white border border-gray-200 rounded-lg shadow mb-4  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="w-full bg-white border border-gray-200 rounded-lg shadow mb-4 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
-            <h5 class="text-2xl px-4 py-2 font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="text-2xl px-4 py-2 font-bold tracking-tight text-gray-900 dark:text-white">
               {post.title}
             </h5>
-            <div className="flex flex-col justify-between px-4 py-2 leading-normal md:flex-1">
+            <div className="flex flex-col justify-between px-4 py-2 leading-normal">
               <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                 {post.subject}
               </h5>
@@ -50,7 +49,7 @@ const Newsletter = ({ data }) => {
                 )}
               </p>
             </div>
-          </p>
+          </div>
         ))}
       </div>
     </>

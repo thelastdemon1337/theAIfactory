@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const config = {
   headers: {
-    "ngrok-skip-browser-warning": true
-  }
-}
+    "ngrok-skip-browser-warning": true,
+  },
+};
 
 const OTPValidation = ({ details }) => {
   const [otp, setOTP] = useState("");
@@ -16,22 +16,24 @@ const OTPValidation = ({ details }) => {
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(Constants.apiGateway + "/users/otp/validate", {
-        email: details.email,
-        otp: otp
-      }, config);
-      if(response.status === 200){
+      const response = await axios.post(
+        Constants.apiGateway + "/users/otp/validate",
+        {
+          email: details.email,
+          otp: otp,
+        },
+        config
+      );
+      if (response.status === 200) {
         const { userId } = response.data;
         naviage("/");
         Constants.notifySuccess("SignUp successful");
-        console.log(userId)
+        console.log(userId);
       }
     } catch (error) {
       Constants.notifyError("Verification failed");
-      console.error(error)
+      console.error(error);
     }
-    
-   
   };
 
   return (
@@ -70,7 +72,10 @@ const OTPValidation = ({ details }) => {
 
                   <div className="flex flex-col space-y-5">
                     <div>
-                      <button onClick={handleOTPSubmit} className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-red-700 border-none text-white text-sm shadow-sm">
+                      <button
+                        onClick={handleOTPSubmit}
+                        className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-red-700 border-none text-white text-sm shadow-sm"
+                      >
                         Verify Account
                       </button>
                     </div>

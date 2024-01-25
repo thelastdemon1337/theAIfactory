@@ -40,7 +40,8 @@ const ResetPassword = () => {
         Constants.apiGateway + "/users/reset-password",
         {
           email: details.email,
-        }
+        },
+        Constants.config
       );
       if (response.status === 200) {
         const { message } = response.data;
@@ -75,7 +76,8 @@ const ResetPassword = () => {
           password: details.password,
           email: details.email,
           otp: details.otp,
-        }
+        },
+        Constants.config
       );
       if (response.status === 200) {
         const { message } = response.data;

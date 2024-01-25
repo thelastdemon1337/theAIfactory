@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       ref: "AITools",
     },
   ],
+  profilePicture: {
+    type: String,
+  },
   registration_date: {
     type: Date,
     default: Date.now,
@@ -36,6 +39,16 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  tokens: {
+    type: Number,
+    default: 0,
+  },
+  transactions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Transaction",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

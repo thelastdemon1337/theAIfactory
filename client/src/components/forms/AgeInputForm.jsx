@@ -26,15 +26,19 @@ const AgeInputForm = () => {
     e.preventDefault();
     localStorage.removeItem("googleLoggedIn");
 
-    if (user.age && !isNaN(user.age) && user.age > 13) {
+    if (user?.age && !isNaN(user.age) && user.age > 13) {
       updateUser(user);
       try {
-        const response = await axios.post(Constants.apiGateway + "/users", {
-          email: user.email,
-          password: user.fullname,
-          fullname: user.fullname,
-          age: user.age,
-        });
+        const response = await axios.post(
+          Constants.apiGateway + "/users",
+          {
+            email: user.email,
+            password: user.fullname,
+            fullname: user.fullname,
+            age: user.age,
+          },
+          Constants.config
+        );
         const accessToken = response.data.accessToken;
 
         await getUserDetails(user.email, accessToken);

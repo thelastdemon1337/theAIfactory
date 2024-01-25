@@ -3,8 +3,21 @@ const bcrypt = require("bcrypt");
 const sendEmail = require("../utils/nodemailer");
 const sendOTP = require("../utils/otpVerification.js");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
 
 const otpMap = new Map();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
 
 const getUserByEmail = async (req, res) => {
   const { email } = req.query;
@@ -145,7 +158,7 @@ const createNewUser = async (req, res) => {
     .exec();
 
   if (duplicate) {
-    return res.status(409).json({ message: "Duplicate username" });
+    return res.status(409).json({ message: "Duplicate email" });
   }
 
   // Hash password
@@ -183,13 +196,23 @@ const createNewUser = async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = async (req, res) => {
-  const { id, fullname, email, favouriteTools, age, password } = req.body;
-  console.log(req.body)
+  const { id, fullname, email, favouriteTools, age, password, tokens } =
+    req.body;
   // Confirm data
   if (!id || !fullname || !email || !favouriteTools || !age) {
     return res
       .status(400)
       .json({ message: "All fields except password are required" });
+  }
+
+   // Check for duplicate username
+  const duplicate = await User.findOne({ email })
+    .collation({ locale: "en", strength: 2 })
+    .lean()
+    .exec();
+
+  if (duplicate) {
+    return res.status(409).json({ message: "Duplicate email" });
   }
 
   // Does the user exist to update?
@@ -202,6 +225,10 @@ const updateUser = async (req, res) => {
   user.email = email;
   user.favouriteTools = favouriteTools;
   user.age = age;
+  
+  if(tokens){
+    user.tokens = tokens;
+  }
 
   if (password) {
     // Hash password

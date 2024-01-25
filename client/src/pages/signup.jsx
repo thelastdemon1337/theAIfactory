@@ -8,9 +8,9 @@ import OTPValidation from "../components/forms/otpValidation";
 
 const config = {
   headers: {
-    "ngrok-skip-browser-warning": true
-  }
-}
+    "ngrok-skip-browser-warning": true,
+  },
+};
 
 const Signup = () => {
   const { updateUser, currentUser } = useUserContext();
@@ -57,12 +57,16 @@ const Signup = () => {
     console.log(user);
     if (user.age && !isNaN(user.age) && user.age > 13) {
       try {
-        const response = await axios.post(Constants.apiGateway + "/users", {
-          email: user.email,
-          password: user.password,
-          fullname: user.fullname,
-          age: user.age,
-        }, config);
+        const response = await axios.post(
+          Constants.apiGateway + "/users",
+          {
+            email: user.email,
+            password: user.password,
+            fullname: user.fullname,
+            age: user.age,
+          },
+          config
+        );
         updateUser(user);
         console.log(currentUser);
         console.log("Response:", response.data);
@@ -103,7 +107,7 @@ const Signup = () => {
             >
               <div className="md:block hidden w-1/2">
                 <h2 className="font-bold text-start mb-8 text-2xl text-white">
-                TheAIFactory
+                  TheAIFactory
                 </h2>
 
                 <img
@@ -114,7 +118,9 @@ const Signup = () => {
               </div>
               <div className="md:w-1/2 px-8 md:px-16 text-start">
                 <h2 className="font-bold  text-2xl text-white">SignUp</h2>
-                <p className="text-xs mt-4 text-white">Welcome to TheAIFactory</p>
+                <p className="text-xs mt-4 text-white">
+                  Welcome to TheAIFactory
+                </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <input

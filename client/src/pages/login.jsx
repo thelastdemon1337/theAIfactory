@@ -9,13 +9,13 @@ import { useUserContext } from "../context/userContext";
 
 const config = {
   headers: {
-    "ngrok-skip-browser-warning": true
-  }
-}
+    "ngrok-skip-browser-warning": true,
+  },
+};
 
 const Login = () => {
   const { getUserDetails } = useUserContext();
-  const naviage = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -36,11 +36,17 @@ const Login = () => {
       console.log(verifiedUser.user);
       const { email, displayName, accessToken } = verifiedUser.user;
       console.log(accessToken);
-      await getUserDetails(email, accessToken);
-      naviage("/");
+      const res = await getUserDetails(email, accessToken);
+      console.log(res);
+      if (res.data.message === "No users found") {
+        throw new Error("No user found");
+      }
+      navigate("/");
       Constants.notifySuccess("Login Successfully");
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
+      if (error.message === "No user found") {
+        Constants.notifyError("No user found");
+      } else if (error.code === "auth/email-already-in-use") {
         Constants.notifyError("Cannot create user, email already in use");
       } else {
         Constants.notifyError("user creation encountered an error");
@@ -53,15 +59,19 @@ const Login = () => {
     e.preventDefault();
     console.log(user);
     try {
-      const response = await axios.post(Constants.apiGateway + "/auth", {
-        email: user.email,
-        password: user.password,
-      }, config);
+      const response = await axios.post(
+        Constants.apiGateway + "/auth",
+        {
+          email: user.email,
+          password: user.password,
+        },
+        config
+      );
       console.log("Response:", response.data);
       const accessToken = response.data.accessToken;
       getUserDetails(user.email, accessToken);
       Constants.notifySuccess("Login Successfully");
-      naviage("/");
+      navigate("/");
     } catch (error) {
       // if (error.message === "Request failed with status code 401") {
       //   Constants.notifyError("Unauthorized User")
@@ -72,7 +82,7 @@ const Login = () => {
   };
 
   const handleNavigateToSignup = () => {
-    naviage("/signup");
+    navigate("/signup");
   };
 
   return (
@@ -160,7 +170,7 @@ const Login = () => {
             <div className="mt-5 text-xs border-b border-white py-4 text-white">
               <a
                 onClick={() => {
-                  naviage("/reset-password");
+                  navigate("/reset-password");
                 }}
               >
                 Forgot your password?
