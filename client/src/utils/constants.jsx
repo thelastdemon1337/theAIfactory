@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 
 // export const apiGateway = "http://localhost:3500"
-export const apiGateway = "https://b856-49-249-163-201.ngrok-free.app";
+export const apiGateway = "https://9e61-49-249-163-201.ngrok-free.app";
+export const stripe_public_key = "pk_test_51N93OHSCV1izsGnxehWkJ7dPM0GFG0vPv3DlGcp9c3AYSIDQW10Tl1DhaLNDmc4oMshVyOIXFXzZFqhkkyi6n4EN00GnDttkSH"
 
 export const config = {
   headers: {
