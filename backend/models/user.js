@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       ref: "AITools",
     },
   ],
+  profilePicture: {
+    type: String,
+  },
   registration_date: {
     type: Date,
     default: Date.now,

@@ -70,9 +70,39 @@ export default {
       default: false,
     },
     {
+      name: 'chatGPTAPI',
+      title: 'chatGPTAPI',
+      type: 'string',
+      hidden: ({document}) => !document.isChatBot,
+    },
+    {
+      name: 'isGeminiBot',
+      title: 'isGeminiBot',
+      type: 'boolean',
+      default: false,
+    },
+    {
+      name: 'geminiGPTAPI',
+      title: 'geminiGPTAPI',
+      type: 'string',
+      hidden: ({document}) => !document.isGeminiBot,
+    },
+    {
+      name: 'isTool',
+      title: 'isTool',
+      type: 'boolean',
+      default: false,
+    },
+    {
       name: 'toolURL',
       title: 'toolURL',
       type: 'string',
+      hidden: ({document}) => !document.isTool,
+    },
+    {
+      name: 'videoLink',
+      title: 'Video Link',
+      type: 'url',
     },
     {
       title: 'Image',
@@ -82,25 +112,25 @@ export default {
       options: {
         hotspot: true, // <-- Defaults to false
       },
-    //       {
-    //   name: 'released',
-    //   title: 'Released',
-    //   type: 'boolean',
-    //   default: false,
-    // },
-    
-      fields: [
-        {
-          name: 'caption',
-          type: 'string',
-          title: 'Caption',
-        },
-        {
-          name: 'attribution',
-          type: 'string',
-          title: 'Attribution',
-        },
-      ],
+      //       {
+      //   name: 'released',
+      //   title: 'Released',
+      //   type: 'boolean',
+      //   default: false,
+      // },
+
+      // fields: [
+      //   {
+      //     name: 'caption',
+      //     type: 'string',
+      //     title: 'Caption',
+      //   },
+      //   {
+      //     name: 'attribution',
+      //     type: 'string',
+      //     title: 'Attribution',
+      //   },
+      // ],
     },
   ],
   preview: {

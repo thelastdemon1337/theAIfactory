@@ -86,7 +86,7 @@ const LeftSection = ({
                       onClick={() =>
                         handlePrevConversation(conversation.messages)
                       }
-                      className="py-2"
+                      className="pb-1"
                     >
                       <p>{conversation.conversationName}</p>
                     </button>

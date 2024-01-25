@@ -10,8 +10,8 @@ const SearchCategoryBar = ({ handleCategory }) => {
     "Coding",
     "Video",
     "tools",
-    "bard",
-    "claude",
+    "aitools",
+    // "claude",
   ];
 
   const handleCategoryClick = (category) => {

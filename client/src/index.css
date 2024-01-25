@@ -30,3 +30,15 @@ code {
   background-color: #1f1f1f;
   border-radius: 6px;
 }
+.card-container {
+  transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+  border-radius: 8px;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+  border: 2px solid transparent; 
+  border-image: linear-gradient(45deg, #ff6b6b, #8a4baf);
+  border-image-slice: 1;
+  border-radius: 8px;
+}

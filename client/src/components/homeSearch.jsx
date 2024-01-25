@@ -37,7 +37,7 @@ const HomeSearch = () => {
   };
 
   const handleToolsAddedToday = () => {
-    navigate(`/ai-tools?date=${encodeURIComponent("today")}`);
+    navigate(`/tools?date=${encodeURIComponent("today")}`);
     console.log(search);
   };
 
@@ -65,16 +65,16 @@ const HomeSearch = () => {
       )}`;
     }
 
-    navigate(`/ai-tools/${queryParams ? `?${queryParams}` : ""}`);
+    navigate(`/tools/${queryParams ? `?${queryParams}` : ""}`);
   };
 
   return (
     <>
       <div>
         <div className="mx-4 mt-12 text-white text-center flex flex-col justify-center items-center sm:mx-8 lg:mx-16">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+          {/* <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
             TheAIFactory
-          </h1>
+          </h1> */}
           <p className="text-sm sm:text-base lg:text-lg mb-4">
             THE LARGEST AI TOOLS DIRECTORY, UPDATED DAILY
           </p>

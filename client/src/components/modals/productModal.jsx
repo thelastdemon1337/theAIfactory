@@ -12,7 +12,7 @@ const ProductModal = ({
 }) => {
   console.log(data);
   const {
-    videoUrl,
+    videoLink,
     features,
     price,
     name,
@@ -58,9 +58,7 @@ const ProductModal = ({
   };
 
   const handleAccessNowButton = () => {
-    console.log("Access Now Clicked");
-
-    navigate(toolURL)
+    window.open(toolURL, '_blank');
   };
 
   return (
@@ -113,7 +111,8 @@ const ProductModal = ({
             <div className="flex my-8 items-center space-x-4">
               {isChatBot ? (
                 <button
-                  onClick={() => navigate(`/ai-tools/chatgpt?key=${API_KEY}`)}
+                 // onClick={() => navigate(`/ai-tools/chatgpt?key=${API_KEY}`)}
+                 onClick={() => navigate(`/ai-tools/chatgpt?`)}
                   className="hover:scale-105 bg-[#FF9900] rounded-lg px-4 py-2.5"
                 >
                   <span className="text-sm font-bold text-gray-900 dark:text-white">
@@ -172,7 +171,8 @@ const ProductModal = ({
                 title="Video"
                 className="w-full h-full"
                 src={
-                  "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"
+                  videoLink
+                  // "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"
                 }
                 allowFullScreen
               />

@@ -77,7 +77,7 @@ const NewsLetter = () => {
       }
       setOpenModal(false);
     } catch (error) {
-      Constants.notifyError("An error occured");
+      // Constants.notifyError("An error occured");
       console.log(error);
     }
   };

@@ -108,7 +108,7 @@ const AIToolsCard = ({
   };
 
   const handleAccessNowButton = (product) => {
-    console.log(currentUser?.age);
+
     if (currentUser?.age === "") {
       handleSignUpModal(true);
     }
@@ -248,7 +248,7 @@ const AIToolsCard = ({
                             </span>
                           </div>
                           <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
-                            {product.description?.slice(0, 60)}
+                            {product.description?.slice(0, 40)}
                           </p>
                         </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
@@ -396,7 +396,7 @@ const AIToolsCard = ({
                             </span>
                           </div>
                           <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
-                            {product.description?.slice(0, 60)}
+                            {product.description?.slice(0, 40)}
                           </p>
                         </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">

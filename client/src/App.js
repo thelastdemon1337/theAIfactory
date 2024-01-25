@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getAitools } from "./utils/sanity";
 
 import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Footer from "./components/footer/footer";
 import ResetPassword from "./components/forms/resetPassword";
 
 import NewsLetter from "./components/forms/newsLetter";
@@ -17,6 +17,12 @@ import AITools from "./pages/aiTools";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Profile from "./pages/profile";
+import Pricing from "./pages/pricing";
+import PrivacyPolicy from "./pages/privacyPolicy"
+import CookiePolicy from "./pages/cookiePolicy";
+import AboutUs from "./pages/about-us";
+import TermAndCondition from "./pages/termAndCondition";
+import Tools from "./pages/tools";
 // import PaymentScreen from "./pages/payment";
 import CustomerSupport from "./pages/customerSupport";
 
@@ -72,17 +78,22 @@ const App = () => {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/ai-tools" element={<AITools />} />
+        <Route path="/tools" element={<Tools />} />
         <Route path="/ai-tools/chatgpt" element={<Chat/>} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/term-and-condition" element={<TermAndCondition />} />
 
         <Route path="/family" element={<ComingSoon />} />
-        <Route path="/pricing" element={<ComingSoon />} />
+        <Route path="/pricing" element={<Pricing />} />
         {/* <Route path="/payments" element={<PaymentScreen />} /> */}
 
         <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* <Route path="*" element={<NoPage />} /> */}
       </Routes>
-      {/* <Footer/> */}
+      <Footer/>
       <NewsLetter />
     </div>
   );

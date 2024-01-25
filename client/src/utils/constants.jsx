@@ -1,13 +1,7 @@
 import { toast } from "react-toastify";
 
-export const apiGateway = "http://localhost:3500";
-// export const apiGateway = "https://2f5d-2401-4900-1c0e-8fff-00-120-69c0.ngrok-free.app";
-
-
-
-
-
-// export const apiGateway = "https://855e-49-249-163-201.ngrok-free.app";
+// export const apiGateway = "http://localhost:3500";
+export const apiGateway = "https://b856-49-249-163-201.ngrok-free.app";
 
 //
 export const stripe_public_key =

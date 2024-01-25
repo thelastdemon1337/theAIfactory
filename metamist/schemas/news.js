@@ -45,18 +45,18 @@ export default {
         options: {
           hotspot: true, // <-- Defaults to false
         },
-        fields: [
-          {
-            name: 'caption',
-            type: 'string',
-            title: 'Caption',
-          },
-          {
-            name: 'attribution',
-            type: 'string',
-            title: 'Attribution',
-          },
-        ],
+        // fields: [
+        //   {
+        //     name: 'caption',
+        //     type: 'string',
+        //     title: 'Caption',
+        //   },
+        //   {
+        //     name: 'attribution',
+        //     type: 'string',
+        //     title: 'Attribution',
+        //   },
+        // ],
       },
       
     ],
