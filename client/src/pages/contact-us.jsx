@@ -34,12 +34,16 @@ const ContactUs = () => {
     console.log(formData);
 
     try {
-      const response = await axios.post(Constants.apiGateway + "/contact-us", {
-        from: formData.email,
-        subject: formData.subject,
-        body: formData.message,
-        name: formData.name,
-      });
+      const response = await axios.post(
+        Constants.apiGateway + "/contact-us",
+        {
+          from: formData.email,
+          subject: formData.subject,
+          body: formData.message,
+          name: formData.name,
+        },
+        Constants.config
+      );
       if (response.status === 200) {
         Constants.notifySuccess("Email sent successfully");
       }
@@ -117,7 +121,9 @@ const ContactUs = () => {
 
           <div className="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-gray-950 rounded-2xl">
             <div className="flex flex-col text-white">
-              <h1 className="font-bold uppercase text-4xl my-4">Connect With Us Today!</h1>
+              <h1 className="font-bold uppercase text-4xl my-4">
+                Connect With Us Today!
+              </h1>
               <p className="text-gray-400 text-xl">
                 We'd love to hear from you! Reach out to us with any questions,
                 feedback, or inquiries. Our team is here to assist you in any
