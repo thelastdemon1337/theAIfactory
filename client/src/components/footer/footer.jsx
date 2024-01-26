@@ -59,7 +59,7 @@ const Footer = () => {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
-                        href=""
+                        href="/"
                       >
                         Blog
                       </a>
@@ -67,7 +67,7 @@ const Footer = () => {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
-                        href=""
+                        href="/"
                       >
                         Github
                       </a>
@@ -75,7 +75,7 @@ const Footer = () => {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
-                        href=""
+                        href="/"
                       >
                         Free Products
                       </a>
@@ -114,7 +114,7 @@ const Footer = () => {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
-                        href=""
+                        href="/contact-us"
                       >
                         Contact Us
                       </a>

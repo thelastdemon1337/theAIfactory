@@ -127,7 +127,7 @@ const Navbar = () => {
                             </Link>
                           )}
                         </Menu.Item>
-                        <Menu.Item>
+                        {/* <Menu.Item>
                           {({ active }) => (
                             <Link
                               to="/customer-support"
@@ -139,7 +139,7 @@ const Navbar = () => {
                               Customer Support
                             </Link>
                           )}
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
                             <Link
