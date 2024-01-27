@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 import "../styles/about-us.scss";
 const AboutUs = () => {
-    const [animationPaused, setAnimationPaused] = useState(false);
+  const [animationPaused, setAnimationPaused] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,27 +16,26 @@ const AboutUs = () => {
     };
 
     // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
-    <div className='body-new'>
-     <div className={`container ${animationPaused ? 'paused' : ''}`}>
-        <main className='main1 z-0'>
+    <div className="body-new">
+      <div className={`container ${animationPaused ? "paused" : ""}`}>
+        <main className="main1 z-0">
           <header>
-            <h2 class="subheader">— Keyframers</h2>
-            <h1>
-              Where we bring imaginative user interfaces <em>to life.</em>
-            </h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-              suscipit ipsam aspernatur quasi reiciendis at eum cupiditate
-              officiis repudiandae quae ea facere odit beatae voluptate
-              recusandae quas, possimus laborum inventore.
+            <h1 class="subheader">About Us</h1>
+            <h3>Introduction</h3>
+            <p className="text-xl">
+              We are a team of AI enthusiasts who are passionate about bringing
+              the latest AI innovations to businesses and individuals. Our
+              company was founded in 2023 by <strong>Harsha Vanukuri</strong>{" "}
+              with the mission of democratizing AI and making it easily
+              accessible through an on-demand, pay-per-prompt service model.
             </p>
           </header>
 
@@ -46,33 +45,58 @@ const AboutUs = () => {
           />
 
           <section>
-            <h2>The Client</h2>
-            <p>
-              You! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Totam voluptatum quidem eligendi debitis quia dignissimos ipsa
-              error, atque quibusdam corrupti soluta facere nulla neque nostrum
-              recusandae assumenda, aspernatur in. Provident!
+            <h3>Service Overview:</h3>
+            <p className="text-xl">
+              We offer access to cutting-edge AI tools such as chatbots, text
+              and image generators, voice assistants, predictive analytics and
+              more through easy-to-use prompts. Customers can simply describe
+              what they need in a prompt and our AI models will generate
+              customized solutions for them. Whether you need to create content,
+              analyze data, automate tasks or build virtual assistants, our AI
+              has you covered.
             </p>
           </section>
 
           <section>
-            <h2>Our Mission</h2>
-            <p>
-              To educate the world in web animation. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Blanditiis ipsa doloremque, natus
-              dolorum a perferendis modi veritatis ab earum, culpa nemo, aliquam
-              qui! Nostrum iste ullam voluptatem, doloribus odit autem.
+            <h3>Expertise and Technology:</h3>
+            <p className="text-xl">
+              Our team combines expertise in machine learning, natural language
+              processing, computer vision and cloud computing to continuously
+              train, optimize and deploy the latest AI models. We source our
+              data responsibly and have strict governance models in place to
+              ensure our AI solutions are ethical, unbiased and secure.
             </p>
           </section>
-          <div class="callout">
+
+          <section>
+            <h3>Flexible Plans:</h3>
+            <p className="text-xl">
+              As a pay-per-prompt service, we aim to make AI accessible for
+              everyone ranging from startups and small businesses to enterprises
+              and individual developers. Our subscription plans and
+              pay-as-you-go credits allow you to use only the AI capabilities
+              you need.
+            </p>
+          </section>
+          <section>
+            <h2>Our Vision</h2>
+            <p className="text-xl">
+              Our vision is to be the go-to AI assistant for getting things
+              done. We want to assist humans, not replace them. If you have an
+              idea and need help executing it, our AI is here to partner with
+              you every step of the way. Get started today and let your prompt
+              be the limit!"
+            </p>
+          </section>
+          {/* <div class="callout">
             <h3>Get animating!</h3>
-            <p>
+            <p className="text-xl">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Consequatur magni dolores iusto nulla vitae, reiciendis amet
               veritatis aliquam iste temporibus itaque aliquid, eveniet saepe
               reprehenderit distinctio eaque libero, culpa tenetur.
             </p>
-          </div>
+          </div> */}
 
           {/* <img
             src="https://images.unsplash.com/photo-1603791445824-0050bd436b6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=80&w=960"

@@ -58,7 +58,7 @@ const RightSection = ({
       );
 
       if (res.status === 200) {
-        Constants.notifyInfo(res.data);
+
       } else {
         // handle error
       }

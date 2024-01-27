@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ScrollableFeed from "react-scrollable-feed";
+import { useNavigate } from "react-router-dom";
 
 import {
   DiscordIcon,
@@ -23,6 +24,7 @@ const LeftSection = ({
 }) => {
   const { currentUser } = useUserContext();
   const [newConversations, setNewConversations] = useState([]);
+  const naviage = useNavigate();
 
   useEffect(() => {
     getNewConversation();
@@ -31,16 +33,15 @@ const LeftSection = ({
   const getNewConversation = async () => {
     try {
       const res = await axios.get(
-        Constants.apiGateway + "/chatGPT/conversation",
+        Constants.apiGateway + "/chatGPT/conversation/?userID=" + currentUser?._id,
         {
-          params: {
-            userID: currentUser?._id,
+          headers: {
+            "ngrok-skip-browser-warning": true,
           },
-        },
-        Constants.config
+        }
       );
       if (res.status === 200) {
-        Constants.notifyInfo(res.data);
+        console.log(res);
         setNewConversations(res.data.conversations);
       } else {
         // handle error
@@ -54,7 +55,6 @@ const LeftSection = ({
   const handlePrevConversation = (value) => {
     handleConversation(value);
     handleShowsDefaultMessage(false);
-
   };
 
   const handleNewConversation = () => {
@@ -80,7 +80,7 @@ const LeftSection = ({
             </button>
             <div className="flex-col flex-1 overflow-y-scroll border-b border-white/20 custom-scrollbar ">
               <div className="flex flex-col gap-2 text-gray-100 text-sm">
-                {newConversations.slice(0, 20).map((conversation) => (
+                {newConversations?.slice(0, 20).map((conversation) => (
                   <div key={conversation._id} className="conversation-item">
                     <button
                       onClick={() =>
@@ -95,13 +95,11 @@ const LeftSection = ({
               </div>
             </div>
 
-            {[
-              { icon: <ExternalLinkIcon />, text: "Updates & FAQ" },
-              { icon: <UserIcon />, text: "Profile" },
-            ].map((item, index) => (
+            {[{ icon: <UserIcon />, text: "Profile" }].map((item, index) => (
               <button
                 className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
                 key={index}
+                onClick={() => naviage("/profile")}
               >
                 {item.icon}
                 {item.text}

@@ -23,6 +23,7 @@ import CookiePolicy from "./pages/cookiePolicy";
 import AboutUs from "./pages/about-us";
 import TermAndCondition from "./pages/termAndCondition";
 import Tools from "./pages/tools";
+import ContactUs from "./pages/contact-us";
 // import PaymentScreen from "./pages/payment";
 import CustomerSupport from "./pages/customerSupport";
 
@@ -84,7 +85,7 @@ const App = () => {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/term-and-condition" element={<TermAndCondition />} />
-
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/family" element={<ComingSoon />} />
         <Route path="/pricing" element={<Pricing />} />
         {/* <Route path="/payments" element={<PaymentScreen />} /> */}
