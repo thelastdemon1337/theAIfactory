@@ -59,9 +59,9 @@ const Footer = () => {
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
-                        href="/"
+                        href="/refund-policy"
                       >
-                        Blog
+                      Refund Policy
                       </a>
                     </li>
                     <li>

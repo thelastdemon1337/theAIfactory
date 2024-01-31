@@ -27,7 +27,7 @@ const ProductModal = ({
     _updatedAt,
     isChatBot,
     API_KEY,
-    toolURL
+    toolURL,
   } = data;
   const { currentUser, updateUser } = useUserContext();
   const formattedDate = new Date(_updatedAt).toLocaleString();
@@ -58,7 +58,11 @@ const ProductModal = ({
   };
 
   const handleAccessNowButton = () => {
-    window.open(toolURL, '_blank');
+    window.open(toolURL, "_blank");
+  };
+
+  const handleClick = () => {
+    navigate("/ai-tools/chatgpt", { state: { tokens: price } });
   };
 
   return (
@@ -111,8 +115,8 @@ const ProductModal = ({
             <div className="flex my-8 items-center space-x-4">
               {isChatBot ? (
                 <button
-                 // onClick={() => navigate(`/ai-tools/chatgpt?key=${API_KEY}`)}
-                 onClick={() => navigate(`/ai-tools/chatgpt?`)}
+                  // onClick={() => navigate(`/ai-tools/chatgpt?key=${API_KEY}`)}
+                  onClick={handleClick}
                   className="hover:scale-105 bg-[#FF9900] rounded-lg px-4 py-2.5"
                 >
                   <span className="text-sm font-bold text-gray-900 dark:text-white">

@@ -108,7 +108,6 @@ const AIToolsCard = ({
   };
 
   const handleAccessNowButton = (product) => {
-
     if (currentUser?.age === "") {
       handleSignUpModal(true);
     }
@@ -252,18 +251,20 @@ const AIToolsCard = ({
                           </p>
                         </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                          {product.tags && product.tags.length > 0 && (
-                            <div className="flex items-center space-x-1">
-                              {product.tags.map((tag, index) => (
-                                <div
-                                  className="text-md font-bold text-white dark:text-white"
-                                  key={index}
-                                >
-                                  #{tag}
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                          {product.tags &&
+                            product.tags.length > 0 &&
+                            product.tags !== "" && (
+                              <div className="flex items-center space-x-1">
+                                {product.tags.map((tag, index) => (
+                                  <div
+                                    className="text-md font-bold text-white dark:text-white"
+                                    key={index}
+                                  >
+                                    #{tag}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                         </div>
                         <div className="flex items-center justify-between mt-4">
                           <button
@@ -400,18 +401,20 @@ const AIToolsCard = ({
                           </p>
                         </span>
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                          {product.tags && product.tags.length > 0 && (
-                            <div className="flex items-center space-x-1">
-                              {product.tags.map((tag, index) => (
-                                <div
-                                  className="text-md font-bold text-white dark:text-white"
-                                  key={index}
-                                >
-                                  #{tag}
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                          {product.tags &&
+                            product.tags.length > 0 &&
+                            product.tags !== "" && (
+                              <div className="flex items-center space-x-1">
+                                {product.tags.map((tag, index) => (
+                                  <div
+                                    className="text-md font-bold text-white dark:text-white"
+                                    key={index}
+                                  >
+                                    #{tag}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                         </div>
                         <div className="flex items-center justify-between mt-4">
                           <button
@@ -461,15 +464,15 @@ const AIToolsCard = ({
             )}
           </div>
         )}
-        {!showSignup && currentUser?._id &&  <ProductModal
-          isOpen={isModalOpen}
-          closeModal={closeProductModal}
-          data={toolData}
-          isLikedByCurrentUser={isLikedByCurrentUser}
-          handleIsLikedByCurrentUser={handleIsLikedByCurrentUser}
-         />}
-
-       
+        {!showSignup && currentUser?._id && (
+          <ProductModal
+            isOpen={isModalOpen}
+            closeModal={closeProductModal}
+            data={toolData}
+            isLikedByCurrentUser={isLikedByCurrentUser}
+            handleIsLikedByCurrentUser={handleIsLikedByCurrentUser}
+          />
+        )}
       </div>
     </>
   );
