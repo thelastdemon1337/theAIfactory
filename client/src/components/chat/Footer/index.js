@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PlaneIcon } from "../../../utils/constants/index";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import * as Constants from "../../../utils/constants";
 import { useUserContext } from "../../../context/userContext";
@@ -16,6 +17,9 @@ const Footer = ({
   const { currentUser } = useUserContext();
   const naviage = useNavigate();
   const [prompt, setPrompt] = useState("");
+  const location = useLocation();
+  const tokensQuery = location.state && location.state.tokens;
+  console.log(tokensQuery);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +33,7 @@ const Footer = ({
         Constants.apiGateway + "/chatGPT",
         {
           prompt: prompt,
+          tokens: tokensQuery,
           userID: currentUser?._id,
         },
         Constants.config

@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
@@ -20,6 +21,7 @@ function classNames(...classes) {
 const Navbar = () => {
   const { currentUser, logOut } = useUserContext();
   const naviage = useNavigate();
+  const profilePicLetter = currentUser?.fullname.charAt(0).toUpperCase() || "Y";
 
   const handleLogout = async () => {
     try {
@@ -86,8 +88,8 @@ const Navbar = () => {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
+                          alt="profile-pic"
+                          src={`https://ui-avatars.com/api/?size=256&name=${profilePicLetter}&background=000&color=fff`}
                         />
                       </Menu.Button>
                     </div>

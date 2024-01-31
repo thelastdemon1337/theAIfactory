@@ -15,7 +15,7 @@ const openai = new OpenAI({
 const activeConversations = {};
 
 const getChatGPTResponse = async (req, res) => {
-  const { prompt, userID } = req.body;
+  const { prompt, userID, tokens } = req.body;
 
   try {
     if (!prompt || typeof prompt !== "string" || !userID) {
@@ -28,28 +28,27 @@ const getChatGPTResponse = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: prompt }],
-      model: "gpt-3.5-turbo",
-    });
-
-
-    console.log(completion.choices[0].message.content);
-
-
-    const response = {
-      reply: completion.choices[0].message.content
-
-    };
-
-    if (user.tokens < Constants.token_purchase_ammount) {
+    if (user.tokens < tokens && tokens > 0) {
       return res
         .status(404)
         .json({ success: false, message: "Unsufficient tokens" });
     }
 
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-3.5-turbo",
+    });
+
+    console.log(completion.choices[0].message.content);
+
+    const response = {
+      reply: completion.choices[0].message.content,
+    };
+
     //Subtracting tokens from usen tokens
-    user.tokens -= Constants.token_purchase_ammount;
+    if(tokens>0){
+      user.tokens -= tokens;
+    }
 
     await user.save();
 
@@ -137,7 +136,7 @@ const getConversations = async (req, res) => {
 
 // Function to generate a random conversation name
 const generateConversationName = async (prompt) => {
-  return (prompt.slice(0, 32));
+  return prompt.slice(0, 32);
 };
 
 module.exports = {

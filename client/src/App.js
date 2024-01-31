@@ -20,6 +20,7 @@ import Profile from "./pages/profile";
 import Pricing from "./pages/pricing";
 import PrivacyPolicy from "./pages/privacyPolicy"
 import CookiePolicy from "./pages/cookiePolicy";
+import RefundPolicy from "./pages/refundPolicy";
 import AboutUs from "./pages/about-us";
 import TermAndCondition from "./pages/termAndCondition";
 import Tools from "./pages/tools";
@@ -83,6 +84,8 @@ const App = () => {
         <Route path="/ai-tools/chatgpt" element={<Chat/>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/term-and-condition" element={<TermAndCondition />} />
         <Route path="/contact-us" element={<ContactUs />} />

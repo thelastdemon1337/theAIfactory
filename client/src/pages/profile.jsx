@@ -12,11 +12,12 @@ const stripePromise = loadStripe(Constants.stripe_public_key);
 
 const Payments = () => {
   const { currentUser, getUserDetails } = useUserContext();
-  console.log(currentUser);
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState(100);
   const [isEditing, setIsEditing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
+  const profilePicLetter = currentUser?.fullname.charAt(0).toUpperCase() || "Y";
+
   const appearance = {
     theme: "stripe",
   };
@@ -367,7 +368,7 @@ const Payments = () => {
                         <div className="relative">
                           <img
                             alt="..."
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            src={`https://ui-avatars.com/api/?size=256&name=${profilePicLetter}&background=000&color=fff`}
                             className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                           />
                         </div>
@@ -384,7 +385,7 @@ const Payments = () => {
                             onChange={(e) => setAmount(e.target.value)}
                           />
                           <button
-                          onClick={handleSubmit}
+                            onClick={handleSubmit}
                             className="bg-red-500 active:bg-red-700 m-1 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                             type="button"
                           >
