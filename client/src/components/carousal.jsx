@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import "../styles/carousal.css";
+import carousal1 from '../assets/images/carousal1.jpeg';
+import carousal2 from '../assets/images/carousal2.jpeg';
+import carousal3 from '../assets/images/carousal3.jpeg';
 
 const CarousalHome = () => {
   useEffect(() => {
@@ -31,33 +34,33 @@ const CarousalHome = () => {
   const carouselData = [
     {
       title: "Lossless Youths",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.",
-      imageUrl: "https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg",
+      description: "",
+      imageUrl:carousal1
     },
     {
       title: "Lossless Youths",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.",
-      imageUrl: "https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg",
+      description: "",
+      imageUrl: carousal2
     },
     {
       title: "Lossless Youths",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.",
-      imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
+      description: "",
+      imageUrl: carousal3
     },
     {
       title: "Lossless Youths",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.",
-      imageUrl: "https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg",
+      description: "",
+      imageUrl: carousal1
     },
     {
       title: "Lossless Youths",
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.",
-      imageUrl: "https://v1.tailwindcss.com/img/card-top.jpg",
+      description: "",
+      imageUrl: carousal2
+    },
+    {
+      title: "Lossless Youths",
+      description: "",
+      imageUrl: carousal3
     },
   ];
 
@@ -71,7 +74,7 @@ const CarousalHome = () => {
                 key={index}
                 className="item"
                 style={{
-                  backgroundImage: `url(${item.imageUrl})`,
+                  backgroundImage: `url(${item.imageUrl})`
                 }}
               >
                 <div className="content">
