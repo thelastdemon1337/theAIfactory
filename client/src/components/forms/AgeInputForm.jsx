@@ -22,11 +22,19 @@ const AgeInputForm = () => {
     setEmail("");
   }
 
+  const calculateAge = (dob) => {
+    const diffMs = Date.now() - new Date(dob).getTime();
+    const ageDt = new Date(diffMs);
+
+    return Math.abs(ageDt.getUTCFullYear() - 1970);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     localStorage.removeItem("googleLoggedIn");
+    const age = calculateAge(user.age);
 
-    if (user?.age && !isNaN(user.age) && user.age > 13) {
+    if (user?.age && age > 13) {
       updateUser(user);
       try {
         const response = await axios.post(
@@ -66,10 +74,13 @@ const AgeInputForm = () => {
 
   const handleUserDetailsChange = (e) => {
     const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
+
+    if (name === "dob") {
+      const age = calculateAge(value);
+      setUser({ ...user, age });
+    } else {
+      setUser({ ...user, [name]: value });
+    }
   };
 
   return (
@@ -121,6 +132,7 @@ const AgeInputForm = () => {
                 name="age"
                 placeholder="Age"
                 value={user.age}
+                type="date"
                 onChange={handleUserDetailsChange}
                 required
               />

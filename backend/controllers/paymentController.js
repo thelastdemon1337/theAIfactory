@@ -70,6 +70,7 @@ const updateUserPaymentDetails = async (req, res) => {
 
     // Save the updated user object
     const updatedUser = await user.save();
+    console.log(updatedUser)
 
     res.status(200).json(updatedUser);
   } catch (error) {

@@ -40,6 +40,7 @@ export default {
       name: 'rating',
       title: 'Rating',
       type: 'number',
+      validation: Rule => Rule.required().min(1).max(5)
     },
     // {
     //   name: 'reviews',

@@ -3,9 +3,16 @@ import { useLocation } from "react-router-dom";
 
 import SigninPopup from "../popups/signinPopup";
 import AvailabilityMessage from "../AvailibilityMessage";
-import { getAitools, builder } from "../../utils/sanity";
+import {
+  getAitools,
+  builder,
+  updateToolLikes,
+  incToolLikes,
+  decToolLikes,
+} from "../../utils/sanity";
 import { useUserContext } from "../../context/userContext";
 import ProductModal from "../modals/productModal";
+import StarRating from "../rating/starRating";
 
 const AIToolsCard = ({
   data,
@@ -115,22 +122,31 @@ const AIToolsCard = ({
     openProductModal();
   };
 
-  const handlefavouriteButton = (id) => {
+  const handlefavouriteButton = async (product) => {
     if (currentUser?.email === "") {
       handleSignUpModal(true);
       return;
     }
-    const isAlreadyLiked = currentUser?.favouriteTools.includes(id);
+    const isAlreadyLiked = currentUser?.favouriteTools.includes(product._id);
 
     if (isAlreadyLiked) {
-      setIsLikedByCurrentUser((prev) => prev.filter((toolId) => toolId !== id));
+      setIsLikedByCurrentUser((prev) =>
+        prev.filter((toolId) => toolId !== product._id)
+      );
+      if (parseInt(product.likes) > 0) {
+        await decToolLikes(product._id, parseInt(product.likes));
+        product.likes = parseInt(product.likes) - 1;
+      } 
+        
     } else {
-      setIsLikedByCurrentUser((prev) => [...prev, id]);
+      setIsLikedByCurrentUser((prev) => [...prev, product._id]);
+      await incToolLikes(product._id, parseInt(product.likes));
+      product.likes = parseInt(product.likes) + 1;
     }
 
     const updatedFavouriteTools = isAlreadyLiked
-      ? currentUser?.favouriteTools.filter((toolId) => toolId !== id)
-      : [...currentUser?.favouriteTools, id];
+      ? currentUser?.favouriteTools.filter((toolId) => toolId !== product._id)
+      : [...currentUser?.favouriteTools, product._id];
 
     updateUser({
       favouriteTools: updatedFavouriteTools,
@@ -174,7 +190,7 @@ const AIToolsCard = ({
                       style={{
                         backgroundColor: "red",
                         width: "22rem",
-                        height: "30rem",
+                        height: "auto",
                       }}
                       className="transition-transform transform hover:scale-105 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-sm mx-2 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                     >
@@ -195,7 +211,7 @@ const AIToolsCard = ({
                             {product.name}
                           </h5>
                           <div className="flex items-center mt-2.5 mb-3">
-                            <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                            {/* <div className="flex items-center space-x-1 rtl:space-x-reverse">
                               <svg
                                 className="w-4 h-4 text-yellow-300"
                                 aria-hidden="true"
@@ -244,7 +260,10 @@ const AIToolsCard = ({
                             </div>
                             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
                               5.0
-                            </span>
+                              {product.rating}
+                            </span> */}
+                            <StarRating rating={product.rating} />
+
                           </div>
                           <p className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white mt-4 mb-2 overflow-hidden">
                             {product.description?.slice(0, 40)}
@@ -277,7 +296,7 @@ const AIToolsCard = ({
                           </button>
 
                           <button
-                            onClick={() => handlefavouriteButton(product._id)}
+                            onClick={() => handlefavouriteButton(product)}
                             className="flex items-end justify-center rounded-xl px-4"
                             style={{
                               backgroundColor: "#FF9900",
@@ -302,7 +321,7 @@ const AIToolsCard = ({
                               />
                             </svg>
                             <div className="text-black  bg-[#FF9900] font-medium rounded-lg text-sm ml-5 py-2.5 text-center">
-                              {product.likes}
+                              {product.likes > 0 ? product.likes : 0}
                             </div>
                           </button>
                         </div>
@@ -427,7 +446,7 @@ const AIToolsCard = ({
                           </button>
 
                           <button
-                            onClick={() => handlefavouriteButton(product._id)}
+                            onClick={() => handlefavouriteButton(product)}
                             className="flex items-end justify-center rounded-xl px-4"
                             style={{
                               backgroundColor: "#FF9900",
@@ -452,7 +471,7 @@ const AIToolsCard = ({
                               />
                             </svg>
                             <div className="text-black  bg-[#FF9900] font-medium rounded-lg text-sm ml-5 py-2.5 text-center">
-                              {product.likes}
+                              {product.likes > 0 ? product.likes : 0}
                             </div>
                           </button>
                         </div>

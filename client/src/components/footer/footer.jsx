@@ -8,13 +8,16 @@ const Footer = () => {
           <div className="flex flex-wrap text-left lg:text-left">
             <div className="w-full lg:w-4/12 px-4">
               <h4 className="text-3xl fonat-semibold text-gray-300">
-               TheAIFactory
+                TheAIFactory
               </h4>
               <h5 className="text-lg mt-0 mb-2 ext-gray-300 text-gray-300">
                 The ultimate platform for AI-powered chatbots
               </h5>
+              <p>8-1-106/A/1/50/A Vinobha nagar Shaikpet Hyderabad - 500008</p>
               <div className="mt-6 lg:mb-0 mb-6">
-                <h6 className="text-md mt-0 mb-2 text-gray-300">Connect with us</h6>
+                <h6 className="text-md mt-0 mb-2 text-gray-300">
+                  Connect with us
+                </h6>
                 <button
                   className="bg-gray-950 text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
@@ -61,7 +64,7 @@ const Footer = () => {
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
                         href="/refund-policy"
                       >
-                      Refund Policy
+                        Refund Policy
                       </a>
                     </li>
                     <li>
@@ -92,7 +95,7 @@ const Footer = () => {
                         className="text-blueGray-600 hover:text-gray-300 font-semibold block pb-2 text-sm"
                         href="/cookie-policy"
                       >
-                       Cookie Policy
+                        Cookie Policy
                       </a>
                     </li>
                     <li>
