@@ -35,32 +35,32 @@ const CarousalHome = () => {
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl:carousal1
+      imageUrl:'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy1.jpeg'
     },
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl: carousal2
+      imageUrl: 'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy2.jpeg'
     },
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl: carousal3
+      imageUrl: 'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy3.jpeg'
     },
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl: carousal1
+      imageUrl: 'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy1.jpeg'
     },
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl: carousal2
+      imageUrl: 'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy2.jpeg'
     },
     {
       title: "Lossless Youths",
       description: "",
-      imageUrl: carousal3
+      imageUrl: 'https://utywebgl.s3.amazonaws.com/public_temporary_images/dummy3.jpeg'
     },
   ];
 
