@@ -26,7 +26,8 @@ const OTPValidation = ({ details }) => {
       );
       if (response.status === 200) {
         const { userId } = response.data;
-        naviage("/");
+        // naviage("/");
+        window.location.href = "/";
         Constants.notifySuccess("SignUp successful");
         console.log(userId);
       }

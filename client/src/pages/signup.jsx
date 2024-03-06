@@ -23,6 +23,13 @@ const Signup = () => {
     fullname: "",
   });
 
+  const calculateAge = (dob) => {
+    const diffMs = Date.now() - new Date(dob).getTime();
+    const ageDt = new Date(diffMs);
+
+    return Math.abs(ageDt.getUTCFullYear() - 1970);
+  };
+
   const handleUserDetailsChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -55,6 +62,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user);
+
     if (user.age && !isNaN(user.age) && user.age > 13) {
       try {
         const response = await axios.post(

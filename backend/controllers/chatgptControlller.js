@@ -16,7 +16,7 @@ const activeConversations = {};
 
 const getChatGPTResponse = async (req, res) => {
   const { prompt, userID, tokens } = req.body;
-
+  console.log(tokens)
   try {
     if (!prompt || typeof prompt !== "string" || !userID) {
       return res.status(400).json({ message: "Invalid Data" });

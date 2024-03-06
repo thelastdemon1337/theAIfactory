@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     default: "Customer",
   },
   age: {
-    type: Number,
+    type: String,
     required: true,
   },
   favouriteTools: [

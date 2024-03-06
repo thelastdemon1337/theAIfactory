@@ -8,7 +8,8 @@ export const sanityConfig = {
   dataset: Constants.DATASET,
   useCdn: true, // set to `false` to bypass the edge cache
   apiVersion: "2023-12-12", // use current date (YYYY-MM-DD) to target the latest API version
-  // token: process.env.SANITY_SECRET_TOKEN // Only if you want to update content with the client
+  // token: process.env.SANITY_SECRET_TOKEN, // Only if you want to update content with the client
+  token:"skEbE0jXigz3JDhuyfLzZorUHF0jccOVESCbsuZoJS5Dz7mZKA0wNptyo7glKj6ISy9dVc2f7ekuAV3RdS6oRLm9N91ZnSI46prrkEPsRhexjAjcX3G8wpd9tneoXceObvQGypWwwhbxQPL1TUXbko7EyZNqVk7hjm5efXa889SRhHwVaTYx"
 };
 
 export const client = createClient(sanityConfig);
@@ -48,6 +49,29 @@ export async function subscribeToNewsletter(email) {
     throw error;
   }
 }
+
+export async function updateToolLikes(_id, like) {
+  console.log(like)
+  console.log(_id)
+  const result = await client.patch(_id).set({ likes: 1 })
+  console.log(result)
+  return result;
+}
+export async function incToolLikes(_id, like) {
+  const result = await client.patch(_id).set({ likes: like + 1 }).commit();
+  await getAitools()
+  console.log(result)
+  return result;
+  
+}
+
+export async function decToolLikes(_id, like) {
+  const result = await client.patch(_id).set({ likes: like - 1 }).commit();
+  console.log(result)
+  await getAitools()
+  return result;
+}
+
 
 // uses GROQ to query content: https://www.sanity.io/docs/groq
 // export async function getPosts() {

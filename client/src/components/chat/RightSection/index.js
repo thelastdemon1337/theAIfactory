@@ -6,6 +6,7 @@ import { useUserContext } from "../../../context/userContext";
 import { LightningChargeIcon, SunIcon } from "../../../utils/constants/index";
 import Footer from "../Footer/index";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const RightSection = ({
   handleShowsDefaultMessage,
@@ -17,6 +18,9 @@ const RightSection = ({
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(conversation ? conversation : []);
   const naviage = useNavigate();
+  const location = useLocation();
+  const tokensQuery = location.state && location.state.tokens;
+  console.log(tokensQuery);
 
   useEffect(() => {
     if (conversation) {
@@ -90,6 +94,7 @@ const RightSection = ({
         {
           prompt: prompt,
           userID: currentUser?._id,
+          tokens: tokensQuery,
         },
         Constants.config
       );
